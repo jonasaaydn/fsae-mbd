@@ -304,7 +304,7 @@ export const tools: Tool[] = [
     category: 'AI Coding',
     description:
       'AutoGenとSemantic Kernelを統合した企業向けAIエージェントフレームワーク。2026年4月2日にv1.0 GAリリース。Python・.NETで同一APIを提供し、MCP（Model Context Protocol）クライアントを標準搭載。MATLAB MCPサーバーに接続してMATLAB/Simulinkを操作するMBDエージェントを数行で構築できる。A2Aプロトコル・CodeAct・Agent Harnessデバッグ・Hosted Agents（Azureマネージド実行）を搭載し、AutoGenユーザー向け移行ライブラリ（maf.compat.autogen）も提供。MIT ライセンス・無料。',
-    official_url: 'https://github.com/microsoft/agent-framework',
+    official_url: 'https://github.com/microsoft/autogen',
     use_cases: ['MATLAB MCPエージェント構築', 'Simulinkパラメータスタディ自動化', 'マルチエージェントMBDワークフロー', 'AutoGenコードの移行', 'Azure Hosted Agentsで本番デプロイ'],
     mbd_relevance: 'high',
     tags: ['Multi-Agent', 'MCP', 'Python', 'AutoGen', 'MATLAB', 'Simulink', 'Enterprise', 'Open Source'],
