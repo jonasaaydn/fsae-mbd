@@ -326,7 +326,7 @@ export const tools: Tool[] = [
     category: 'CAE / Simulation AI',
     description:
       'SiemensがCES 2026（2026年1月）で発表した次世代デジタルツインプラットフォーム。CAD・FEA/CFDシミュレーション・IoTセンサーデータ・AIをNVIDIA Omniverseベースの物理精度の高い3D仮想環境に統合する。設計変更がシミュレーション結果にリアルタイム反映され、現場センサーデータと仮想モデルを同一空間で比較可能。PepsiCo事例では工場建設前に90%の問題を仮想で発見。PAVE360 Automativeとの統合でSDV（ソフトウェア定義車両）システムレベルデジタルツインも構築できる。Siemens Xcelerator Marketplace経由で2026年中頃から提供。',
-    official_url: 'https://news.siemens.com/en-us/digital-twin-composer-ces-2026/',
+    official_url: 'https://www.siemens.com/en-us/company/digital-transformation/industrial-metaverse/introducing-digital-twin-composer/',
     use_cases: ['設計→シミュレーション→実データの統合可視化', 'IoTセンサーとシミュレーションのリアルタイム比較', 'AI異常検知・最適化提案', 'SDVシステムレベルデジタルツイン構築', '仮想コミッショニングによる物理試験前問題発見'],
     mbd_relevance: 'high',
     tags: ['Digital Twin', 'NVIDIA Omniverse', 'IoT', 'Industrial AI', 'Xcelerator', 'SDV', 'Real-time'],
