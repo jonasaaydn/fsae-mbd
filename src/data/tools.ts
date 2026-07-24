@@ -304,7 +304,7 @@ export const tools: Tool[] = [
     category: 'AI Coding',
     description:
       'AutoGenとSemantic Kernelを統合した企業向けAIエージェントフレームワーク。2026年4月2日にv1.0 GAリリース。Python・.NETで同一APIを提供し、MCP（Model Context Protocol）クライアントを標準搭載。MATLAB MCPサーバーに接続してMATLAB/Simulinkを操作するMBDエージェントを数行で構築できる。A2Aプロトコル・CodeAct・Agent Harnessデバッグ・Hosted Agents（Azureマネージド実行）を搭載し、AutoGenユーザー向け移行ライブラリ（maf.compat.autogen）も提供。MIT ライセンス・無料。',
-    official_url: 'https://github.com/microsoft/agent-framework',
+    official_url: 'https://github.com/microsoft/autogen',
     use_cases: ['MATLAB MCPエージェント構築', 'Simulinkパラメータスタディ自動化', 'マルチエージェントMBDワークフロー', 'AutoGenコードの移行', 'Azure Hosted Agentsで本番デプロイ'],
     mbd_relevance: 'high',
     tags: ['Multi-Agent', 'MCP', 'Python', 'AutoGen', 'MATLAB', 'Simulink', 'Enterprise', 'Open Source'],
@@ -319,6 +319,17 @@ export const tools: Tool[] = [
     use_cases: ['MATLAB MCP経由のSimulinkモデル自動操作', '並列サブエージェントによる複数ケース同時シミュレーション', 'MBDワークフロー自動化スクリプト生成', 'Gemini CLI からの移行', 'Google Cloud AgentPlatformへの本番デプロイ'],
     mbd_relevance: 'high',
     tags: ['AI Agent', 'CLI', 'MCP', 'MATLAB', 'Simulink', 'Google', 'Gemini', 'Multi-Agent'],
+  },
+  {
+    name: 'Siemens Digital Twin Composer',
+    developer: 'Siemens Digital Industries Software',
+    category: 'CAE / Simulation AI',
+    description:
+      'SiemensがCES 2026（2026年1月）で発表した次世代デジタルツインプラットフォーム。CAD・FEA/CFDシミュレーション・IoTセンサーデータ・AIをNVIDIA Omniverseベースの物理精度の高い3D仮想環境に統合する。設計変更がシミュレーション結果にリアルタイム反映され、現場センサーデータと仮想モデルを同一空間で比較可能。PepsiCo事例では工場建設前に90%の問題を仮想で発見。PAVE360 Automativeとの統合でSDV（ソフトウェア定義車両）システムレベルデジタルツインも構築できる。Siemens Xcelerator Marketplace経由で2026年中頃から提供。',
+    official_url: 'https://www.siemens.com/en-us/company/digital-transformation/industrial-metaverse/introducing-digital-twin-composer/',
+    use_cases: ['設計→シミュレーション→実データの統合可視化', 'IoTセンサーとシミュレーションのリアルタイム比較', 'AI異常検知・最適化提案', 'SDVシステムレベルデジタルツイン構築', '仮想コミッショニングによる物理試験前問題発見'],
+    mbd_relevance: 'high',
+    tags: ['Digital Twin', 'NVIDIA Omniverse', 'IoT', 'Industrial AI', 'Xcelerator', 'SDV', 'Real-time'],
   },
   {
     name: 'JetBrains Air',
