@@ -28,25 +28,74 @@ const studentPosts = allPosts.filter((p) => p.slug.startsWith('student-formula-'
 ---
 
 <BaseLayout title="ホーム">
-  <!-- Hero -->
+  <!-- Hero: Telemetry Convergence -->
   <section class="hero">
     <div class="container hero-inner">
-      <div class="hero-label">Race Engineering × AI Tools</div>
-      <h1 class="hero-title">
-        MBD エンジニアのための<br />
-        AI ツール情報ラボ
-      </h1>
-      <p class="hero-desc">
-        レース車両開発・MBD・CAE・制御・走行データ解析に携わるエンジニアと学生フォーミュラチームへ。<br class="br-md" />
-        特定ツールに偏らず、MBD×AI の最新動向を<strong>実装コードつき・日本語</strong>で横断的にまとめる技術ブログです。
-      </p>
-      <div class="hero-actions">
-        <a href={`${base}blog`} class="btn btn-primary">記事を読む</a>
-        <a href={`${base}guide/student-formula`} class="btn btn-student">学生フォーミュラ実践ガイド</a>
-        <a href={`${base}tools`} class="btn btn-outline">AIツール一覧</a>
+      <div class="hero-copy">
+        <p class="hero-eyebrow"><span class="eb-tick"></span>MBD × RACE ENGINEERING × AI</p>
+        <h1 class="hero-title">解に、<span class="accent">速く</span>収束する。</h1>
+        <p class="hero-desc">
+          レース車両開発・MBD・CAE・制御に効く AI ツールを、<strong>実装コードつき・日本語</strong>で。
+          設計の反復を、そのまま開発時間の短縮に変える技術ブログです。
+        </p>
+        <div class="hero-actions">
+          <a href={`${base}blog`} class="hero-btn hero-btn-primary">記事を読む</a>
+          <a href={`${base}guide/student-formula`} class="hero-btn hero-btn-ghost">学生フォーミュラ実践ガイド</a>
+          <a href={`${base}tools`} class="hero-textlink">AIツール一覧 →</a>
+        </div>
       </div>
+
+      <figure class="scope">
+        <figcaption class="scope-head">
+          <span>STEP RESPONSE · 開発の収束</span>
+          <span class="scope-live"><span class="scope-live-dot"></span>LIVE</span>
+        </figcaption>
+        <div class="scope-plot">
+          <svg viewBox="0 0 560 360" role="img"
+               aria-label="AI支援によって開発が目標精度へ速く収束することを示すステップ応答グラフ。手作業のトレースは緩やかに上がり、AI支援のトレースは急峻に立ち上がって目標線に到達する。"
+               preserveAspectRatio="xMidYMid meet">
+            <line class="grid-line" x1="148" y1="28" x2="148" y2="312" />
+            <line class="grid-line" x1="242" y1="28" x2="242" y2="312" />
+            <line class="grid-line" x1="336" y1="28" x2="336" y2="312" />
+            <line class="grid-line" x1="430" y1="28" x2="430" y2="312" />
+            <line class="grid-line" x1="54" y1="99" x2="528" y2="99" />
+            <line class="grid-line" x1="54" y1="170" x2="528" y2="170" />
+            <line class="grid-line" x1="54" y1="241" x2="528" y2="241" />
+
+            <line class="axis-line" x1="54" y1="28" x2="54" y2="312" />
+            <line class="axis-line" x1="54" y1="312" x2="528" y2="312" />
+
+            <line class="target-line" x1="54" y1="70" x2="528" y2="70" />
+            <text class="plot-label" x="524" y="63" text-anchor="end">目標精度</text>
+
+            <path class="trace trace-ref draw" pathLength="1" d="M54,312 C170,300 300,250 528,150" />
+            <path class="trace trace-hot draw" pathLength="1" d="M54,312 C120,302 150,120 214,74 L528,70" />
+
+            <g class="scope-marker">
+              <circle class="marker-ring pulse" cx="214" cy="72" r="5" />
+              <circle class="marker-dot" cx="214" cy="72" r="3.2" />
+            </g>
+            <text class="anno" x="228" y="58">AI支援 ▸ 数分で収束</text>
+
+            <g transform="translate(72,42)">
+              <line class="leg-hot" x1="0" y1="0" x2="22" y2="0" />
+              <text class="legend-t" x="29" y="4">AI支援（実装コード付き）</text>
+              <line class="leg-ref" x1="0" y1="18" x2="22" y2="18" />
+              <text class="legend-t" x="29" y="22">手作業</text>
+            </g>
+
+            <text class="plot-label" x="291" y="342" text-anchor="middle">反復回数・工数 →</text>
+            <text class="plot-label" text-anchor="middle" transform="translate(20,170) rotate(-90)">精度・収束 →</text>
+          </svg>
+        </div>
+        <div class="scope-readouts">
+          <div class="ch"><span class="ch-id">CH1</span><span class="ch-name">CFD反復</span><span class="ch-delta"><span class="was">8–12h</span> ▸ <span class="now">数分</span></span></div>
+          <div class="ch"><span class="ch-id">CH2</span><span class="ch-name">Simulink構築</span><span class="ch-delta"><span class="was">1–2週</span> ▸ <span class="now">半日</span></span></div>
+          <div class="ch"><span class="ch-id">CH3</span><span class="ch-name">データ解析</span><span class="ch-delta"><span class="was">2–3h</span> ▸ <span class="now">15分</span></span></div>
+          <div class="ch"><span class="ch-id">CH4</span><span class="ch-name">PID調整</span><span class="ch-delta"><span class="was">10–15分</span> ▸ <span class="now">30秒</span></span></div>
+        </div>
+      </figure>
     </div>
-    <div class="hero-stripe" aria-hidden="true"></div>
   </section>
 
   <!-- ── 悩みから探す（Pain Points） ── -->
@@ -367,106 +416,227 @@ const studentPosts = allPosts.filter((p) => p.slug.startsWith('student-formula-'
 </BaseLayout>
 
 <style>
-  /* Hero */
+  /* ══ Hero: Telemetry Convergence ══ */
   .hero {
     position: relative;
-    background: var(--color-navy);
-    color: #ffffff;
-    padding: 4rem 0 3.5rem;
+    --scope-ink: #eaf1f8;
+    --scope-dim: #7e90a6;
+    --hot: #ff5b43;
+    --ref: #38e0ce;
+    --grid: rgba(126, 150, 190, 0.12);
+    background: radial-gradient(130% 120% at 12% -10%, #12202f 0%, #0b111a 58%);
+    color: var(--scope-ink);
+    padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4.25rem);
     overflow: hidden;
+    border-bottom: 1px solid #1b2735;
   }
 
   .hero-inner {
     position: relative;
     z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(1.75rem, 4vw, 3.25rem);
+    align-items: center;
   }
 
-  .hero-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: 0.75rem;
+  .hero-copy {
+    animation: hero-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
     font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--hot);
+    margin: 0 0 1.1rem;
+  }
+  .eb-tick {
+    width: 20px;
+    height: 2px;
+    background: var(--hot);
+    box-shadow: 0 0 8px var(--hot);
   }
 
   .hero-title {
-    font-size: clamp(1.6rem, 4.5vw, 2.6rem);
-    font-weight: 800;
-    line-height: 1.25;
-    letter-spacing: -0.03em;
+    font-family: 'Zen Kaku Gothic New', var(--font-sans, sans-serif);
+    font-size: clamp(2.1rem, 5.8vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.14;
+    letter-spacing: 0.01em;
     color: #ffffff;
-    margin-bottom: 1.1rem;
+    margin: 0 0 1.15rem;
+  }
+  .hero-title .accent {
+    color: var(--hot);
   }
 
   .hero-desc {
-    font-size: clamp(0.875rem, 2vw, 1rem);
-    color: #94a3b8;
-    line-height: 1.75;
-    margin-bottom: 1.75rem;
-    max-width: 600px;
+    font-size: clamp(0.9rem, 1.9vw, 1.02rem);
+    color: #9fb0c4;
+    line-height: 1.85;
+    margin: 0 0 1.9rem;
+    max-width: 40ch;
   }
-
-  .br-md {
-    display: none;
-  }
-
-  @media (min-width: 640px) {
-    .br-md { display: inline; }
+  .hero-desc strong {
+    color: #d7e2ee;
+    font-weight: 600;
   }
 
   .hero-actions {
     display: flex;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 0.9rem;
     flex-wrap: wrap;
   }
-
-  .hero .btn-outline {
-    border-color: #334155;
-    color: #94a3b8;
-  }
-
-  .hero .btn-outline:hover {
-    border-color: #94a3b8;
-    color: #ffffff;
-    background: #1e293b;
-  }
-
-  /* Racing stripe decoration */
-  .hero-stripe {
-    position: absolute;
-    right: -2rem;
-    top: 0;
-    bottom: 0;
-    width: 340px;
-    background: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 18px,
-      rgba(220, 38, 38, 0.06) 18px,
-      rgba(220, 38, 38, 0.06) 36px
-    );
-    pointer-events: none;
-  }
-
-  /* 学生向け Hero CTA */
-  .btn-student {
+  .hero-btn {
     display: inline-flex;
     align-items: center;
-    padding: 0.55em 1.1em;
+    padding: 0.7em 1.35em;
     font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(220, 38, 38, 0.6);
-    color: #fca5a5;
-    background: rgba(220, 38, 38, 0.12);
-    transition: background 0.15s, color 0.15s;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, color 0.15s;
     white-space: nowrap;
   }
-  .btn-student:hover {
-    background: rgba(220, 38, 38, 0.25);
-    color: #fff;
+  .hero-btn-primary {
+    background: var(--hot);
+    color: #0b111a;
+    box-shadow: 0 8px 24px -8px rgba(255, 91, 67, 0.6);
+  }
+  .hero-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -8px rgba(255, 91, 67, 0.75);
+  }
+  .hero-btn-ghost {
+    border: 1px solid #33465b;
+    color: #c7d4e2;
+  }
+  .hero-btn-ghost:hover {
+    border-color: var(--ref);
+    color: #ffffff;
+  }
+  .hero-textlink {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--scope-dim);
+  }
+  .hero-textlink:hover {
+    color: var(--ref);
+  }
+
+  /* Instrument panel */
+  .scope {
+    margin: 0;
+    background: linear-gradient(180deg, #0e1826 0%, #0a0f17 100%);
+    border: 1px solid #1e2c3d;
+    border-radius: 14px;
+    padding: 0.9rem 1rem 1rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 24px 50px -24px rgba(0, 0, 0, 0.7);
+  }
+  .scope-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--scope-dim);
+    padding: 0 0.15rem 0.75rem;
+  }
+  .scope-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--hot);
+  }
+  .scope-live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--hot);
+    box-shadow: 0 0 8px var(--hot);
+    animation: scope-blink 1.6s ease-in-out infinite;
+  }
+  .scope-plot svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .scope-readouts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.25rem;
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid #1a2634;
+  }
+  .ch {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+  .ch-id {
+    color: var(--ref);
+    flex-shrink: 0;
+  }
+  .ch-name {
+    color: var(--scope-dim);
+    flex: 1;
+    white-space: nowrap;
+  }
+  .ch-delta {
+    color: var(--scope-ink);
+    white-space: nowrap;
+  }
+  .ch-delta .was {
+    color: var(--scope-dim);
+    text-decoration: line-through;
+  }
+  .ch-delta .now {
+    color: var(--hot);
+  }
+
+  /* SVG plot */
+  .grid-line { stroke: var(--grid); stroke-width: 1; }
+  .axis-line { stroke: #2a3a4e; stroke-width: 1.2; }
+  .target-line { stroke: rgba(140, 160, 185, 0.45); stroke-width: 1; stroke-dasharray: 5 5; }
+  .plot-label { fill: var(--scope-dim); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.03em; }
+  .anno { fill: var(--hot); font-family: var(--font-mono); font-size: 11px; font-weight: 500; }
+  .legend-t { fill: var(--scope-ink); font-family: var(--font-mono); font-size: 10.5px; }
+  .leg-hot { stroke: var(--hot); stroke-width: 2.6; stroke-linecap: round; }
+  .leg-ref { stroke: var(--ref); stroke-width: 1.8; opacity: 0.85; stroke-linecap: round; }
+  .marker-ring { fill: none; stroke: var(--hot); stroke-width: 1.6; }
+  .marker-dot { fill: var(--hot); }
+  .trace { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .trace-ref { stroke: var(--ref); stroke-width: 1.8; opacity: 0.85; }
+  .trace-hot { stroke: var(--hot); stroke-width: 2.6; filter: drop-shadow(0 0 5px rgba(255, 91, 67, 0.55)); }
+  .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: trace-draw 1.9s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  .trace-ref.draw { animation-duration: 2.3s; }
+  .scope-marker { opacity: 0; animation: marker-in 0.4s ease 1.7s forwards; }
+  .pulse { animation: marker-pulse 2s ease-in-out 2.1s infinite; }
+
+  @keyframes trace-draw { to { stroke-dashoffset: 0; } }
+  @keyframes marker-in { to { opacity: 1; } }
+  @keyframes marker-pulse { 0%, 100% { r: 5; } 50% { r: 8; } }
+  @keyframes scope-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes hero-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .scope-readouts { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-copy, .draw, .scope-marker, .pulse, .scope-live-dot { animation: none; }
+    .draw { stroke-dashoffset: 0; }
+    .scope-marker { opacity: 1; }
   }
 
   /* ── 悩みから探す（Pain Points） ── */
