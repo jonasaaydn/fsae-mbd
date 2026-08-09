@@ -1,0 +1,37 @@
+---
+import FigureFrame from './FigureFrame.astro';
+
+interface Props {
+  number?: string;
+}
+const { number = '2-1' } = Astro.props;
+
+const caption =
+  'タイヤを上から見た図（ISO 8855：紙面上方向が +y／車両左）。タイヤの向き（ホイール面）に対して接地点の速度ベクトルが角度 α だけ傾くと、その傾きを打ち消す向きに横力 F_y が生じる。α と F_y は常に逆符号になる。';
+---
+
+<FigureFrame number={number} caption={caption} viewBox="0 0 560 370">
+  <!-- タイヤ本体（上から見た簡略形。進行方向＝画面右） -->
+  <rect class="body" x="120" y="165" width="140" height="50" rx="22" />
+
+  <!-- 接地点 -->
+  <circle class="dot" cx="190" cy="190" r="4" />
+  <text class="lbl-sub" x="60" y="172">接地点</text>
+
+  <!-- ホイール面（タイヤの向き＝進行方向の基準） -->
+  <line class="geo" x1="190" y1="190" x2="420" y2="190" marker-end="url(#arrow-geo)" />
+  <text class="lbl-sub" x="270" y="178">タイヤの向き（ホイール面）</text>
+
+  <!-- 角度 α の弧（ホイール面から速度ベクトルまで） -->
+  <path class="guide" d="M 245 190 A 55 55 0 0 1 241 169.4" />
+  <text class="sym" x="256" y="172">α</text>
+
+  <!-- 接地点の速度ベクトル（ホイール面から角度 α だけ傾く） -->
+  <line class="vel" x1="190" y1="190" x2="403.3" y2="103.8" marker-end="url(#arrow-vel)" />
+  <text class="sym lbl-vel" x="410" y="100">v</text>
+  <text class="lbl-sub" x="410" y="118">接地点の速度</text>
+
+  <!-- 横力 F_y（ホイール面に垂直。α と逆向きに生じる） -->
+  <line class="force" x1="190" y1="190" x2="190" y2="335" marker-end="url(#arrow-force)" />
+  <text class="sym lbl-force" x="200" y="355">F<tspan baseline-shift="sub" font-size="0.7em">y</tspan></text>
+</FigureFrame>
