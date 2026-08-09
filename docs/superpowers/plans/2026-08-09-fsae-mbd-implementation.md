@@ -1612,6 +1612,8 @@ import { join } from 'node:path';
 const DIST = join(process.cwd(), 'dist');
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
+// 未達だが「失敗」ではないもの（外部要因待ち）。合否には数えず、必ず目立たせる。
+const pending = (name, ok, detail = '') => results.push({ name, ok, detail, pending: true });
 const read = (p) => (existsSync(join(DIST, p)) ? readFileSync(join(DIST, p), 'utf8') : null);
 
 // 1. 主要ページが生成されている
@@ -1650,8 +1652,16 @@ if (existsSync(DIST)) walk(DIST);
 check('旧ベースパス mbd-ai-lab が残っていない', stale === 0, `残存: ${stale} ファイル`);
 
 // 6. 検証済みの章にだけ実行環境が表示される
+// 第1章の実測は運営者の MATLAB 実行待ち。未実測は「失敗」ではなく「保留」として区別する。
+// 実行していない出力を実行結果として載せないことが本サイトの存在理由なので、
+// 実測が入るまでは pending のままにしておくのが正しい状態。
 const ch1 = read('ch/01-coordinates/index.html') ?? '';
-check('第1章に実行環境が表示される', ch1.includes('実行して出力を確認しています'));
+const ch1Verified = ch1.includes('実行して出力を確認しています');
+if (ch1Verified) {
+  check('第1章に実行環境が表示される', true);
+} else {
+  pending('第1章の実測（運営者の MATLAB 実行待ち）', ch1.includes('未実測'));
+}
 check('未執筆章に実行環境が表示されない', !planned.includes('実行して出力を確認しています'));
 
 // 7. 禁止表現が存在しない
