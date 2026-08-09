@@ -33,11 +33,11 @@ const caption = isISO
   <text class="lbl-sub" x="292" y={isISO ? 74 : 264}>{yLabel}</text>
 
   <!-- 原点 -->
-  <circle cx="280" cy="150" r="4" fill="#0f172a" />
+  <circle class="dot" cx="280" cy="150" r="4" />
   <text class="lbl-sub" x="292" y="140">重心（原点）</text>
 
-  <!-- z の向きの注記 -->
-  <text class="lbl-sub" x="80" y="150">{zText}</text>
+  <!-- z の向きの注記。車体（x:180-380, y:110-190）と重ならないよう、車体の下に配置する -->
+  <text class="lbl-sub" x="80" y="220">{zText}</text>
 
   <!-- 規約名 -->
   <text x="80" y="60" font-weight="700">{convention}</text>
