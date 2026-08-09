@@ -53,9 +53,9 @@ const currentPath = Astro.url.pathname;
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.95);
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--rule);
   }
 
   .header-inner {
@@ -75,8 +75,8 @@ const currentPath = Astro.url.pathname;
   }
 
   .logo-icon {
-    font-size: 1.4rem;
-    color: var(--color-accent);
+    font-size: 1.3rem;
+    color: var(--moss);
     line-height: 1;
   }
 
@@ -87,16 +87,18 @@ const currentPath = Astro.url.pathname;
   }
 
   .logo-main {
+    font-family: var(--font-serif);
     font-size: 1rem;
     font-weight: 700;
-    color: var(--color-navy);
-    letter-spacing: -0.02em;
+    color: var(--ink);
+    letter-spacing: 0.01em;
   }
 
   .logo-sub {
-    font-size: 0.62rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
     font-weight: 500;
-    color: var(--color-text-muted);
+    color: var(--ink-soft);
     letter-spacing: 0.02em;
   }
 
@@ -119,7 +121,7 @@ const currentPath = Astro.url.pathname;
     padding: 0.4em 0.75em;
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-text-muted);
+    color: var(--ink-soft);
     border-radius: var(--radius-md);
     transition: color 0.15s, background 0.15s;
     white-space: nowrap;
@@ -127,12 +129,12 @@ const currentPath = Astro.url.pathname;
 
   .nav-link:hover,
   .nav-link.active {
-    color: var(--color-text);
-    background: var(--color-bg-muted);
+    color: var(--ink);
+    background: var(--paper-raised);
   }
 
   .nav-link.active {
-    color: var(--color-accent);
+    color: var(--moss);
     font-weight: 600;
   }
 
@@ -143,15 +145,15 @@ const currentPath = Astro.url.pathname;
     width: 34px;
     height: 34px;
     border-radius: var(--radius-md);
-    color: var(--color-text-muted);
-    border: 1px solid var(--color-border);
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
     transition: color 0.15s, background 0.15s, border-color 0.15s;
     flex-shrink: 0;
   }
   .search-btn:hover {
-    color: var(--color-accent);
-    background: var(--color-bg-subtle);
-    border-color: var(--color-accent);
+    color: var(--moss);
+    background: var(--paper-raised);
+    border-color: var(--moss);
   }
 
   /* Hamburger */
@@ -163,7 +165,7 @@ const currentPath = Astro.url.pathname;
     width: 36px;
     height: 36px;
     background: none;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--rule);
     border-radius: var(--radius-md);
     cursor: pointer;
     padding: 0 8px;
@@ -173,7 +175,7 @@ const currentPath = Astro.url.pathname;
     display: block;
     width: 100%;
     height: 2px;
-    background: var(--color-text);
+    background: var(--ink);
     border-radius: 2px;
     transition: transform 0.2s, opacity 0.2s;
   }
@@ -189,8 +191,8 @@ const currentPath = Astro.url.pathname;
       top: 60px;
       left: 0;
       right: 0;
-      background: var(--color-bg);
-      border-bottom: 1px solid var(--color-border);
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
       padding: 1rem 1.25rem;
     }
 

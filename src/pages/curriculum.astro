@@ -21,11 +21,11 @@ const STATUS_LABEL = { planned: '準備中', draft: '執筆中', published: '' }
     </header>
 
     {groups.map(({ part, chapters }) => (
-      <section class="part">
+      <section class="part" id={`part-${part.id}`}>
         <h2 class="part-title">
-          <span class="part-roman">第{part.roman}部</span>
+          <span class="part-roman">{part.roman}</span>
           {part.title}
-          <span class="part-count">{progress.byPart[part.id].published} / {progress.byPart[part.id].total} 章</span>
+          <span class="part-count">{progress.byPart[part.id].published} / {progress.byPart[part.id].total}</span>
         </h2>
         <p class="part-sub">{part.subtitle}</p>
         <ol class="ch-list">
@@ -50,32 +50,41 @@ const STATUS_LABEL = { planned: '準備中', draft: '執筆中', published: '' }
 
 <style>
   .toc { max-width: 820px; padding-top: 3rem; padding-bottom: 4rem; }
-  .toc-head h1 { font-size: 2rem; margin: 0 0 0.5rem; color: var(--color-navy); }
-  .toc-progress { color: var(--color-text-muted); margin: 0 0 2.5rem; }
-  .part { margin-bottom: 2.75rem; }
+  .toc-head h1 { font-size: 2rem; margin: 0 0 0.5rem; }
+  .toc-progress { font-family: var(--font-mono); font-size: 0.88rem; color: var(--ink-soft); margin: 0 0 2.5rem; }
+  .part { margin-bottom: 2.75rem; scroll-margin-top: 5rem; }
   .part-title {
-    display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap;
-    font-size: 1.25rem; color: var(--color-navy); margin: 0 0 0.25rem;
-    border-left: 4px solid var(--color-accent); padding-left: 0.65rem;
+    display: flex; align-items: baseline; gap: 0.65rem; flex-wrap: wrap;
+    font-size: 1.2rem; margin: 0 0 0.3rem;
+    border-left: 3px solid var(--moss); padding-left: 0.7rem;
   }
-  .part-roman { font-size: 0.8rem; letter-spacing: 0.08em; color: var(--color-accent); }
-  .part-count { margin-left: auto; font-size: 0.78rem; color: var(--color-text-muted); font-weight: 500; }
-  .part-sub { font-size: 0.88rem; color: var(--color-text-muted); margin: 0 0 0.9rem 0.9rem; }
-  .ch-list { list-style: none; padding: 0 0 0 0.9rem; margin: 0; }
+  .part-roman {
+    font-family: var(--font-mono); font-size: 1rem; font-weight: 700;
+    letter-spacing: 0.04em; color: var(--moss);
+  }
+  .part-count {
+    margin-left: auto; font-family: var(--font-mono); font-size: 0.85rem;
+    color: var(--ink-soft); font-weight: 500;
+  }
+  .part-sub { font-size: 0.88rem; color: var(--ink-soft); margin: 0 0 0.9rem 1rem; }
+  .ch-list { list-style: none; padding: 0 0 0 1rem; margin: 0; }
   .ch-item {
     display: flex; align-items: baseline; gap: 0.7rem;
-    padding: 0.45rem 0; border-bottom: 1px solid var(--color-border);
+    padding: 0.5rem 0; border-bottom: 1px solid var(--rule);
   }
   .ch-num {
     flex-shrink: 0; width: 2rem; text-align: right;
-    font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-text-subtle);
+    font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-soft);
   }
   .ch-title { font-size: 0.95rem; }
-  .is-planned .ch-title, .is-draft .ch-title { color: var(--color-text-muted); }
+  .ch-item a.ch-title { color: var(--moss); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--moss) 45%, transparent); text-underline-offset: 0.15em; }
+  .ch-item a.ch-title:hover { text-decoration-color: var(--moss); }
+  .is-planned .ch-title, .is-draft .ch-title { color: var(--ink-soft); }
   .ch-status {
     margin-left: auto; flex-shrink: 0;
-    font-size: 0.7rem; color: var(--color-text-muted);
-    border: 1px solid var(--color-border); border-radius: var(--radius-sm);
-    padding: 0.1em 0.5em;
+    font-size: 0.7rem; color: var(--ink);
+    border: 1px solid var(--amber); background: var(--amber-fill);
+    border-radius: var(--radius-sm);
+    padding: 0.15em 0.55em;
   }
 </style>

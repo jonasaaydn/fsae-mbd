@@ -1,45 +1,61 @@
 /* ============================================================
    学生フォーミュラのモデルベース開発 — Global Styles
+   デザイントークン: .superpowers/sdd/2026-08-09-fsae-mbd-implementation/design-direction.md 準拠
+   5値パレット（紙・インク・罫線・苔・琥珀）+ 3書体（明朝見出し / ゴシック本文 / 等幅数値）
    ============================================================ */
 
 :root {
-  --color-bg: #ffffff;
-  --color-bg-subtle: #f8fafc;
-  --color-bg-muted: #f1f5f9;
-  --color-border: #e2e8f0;
-  --color-border-strong: #cbd5e1;
+  /* ---- 5値パレット（固定値。design-direction.md の値をそのまま使う） ---- */
+  --paper: #F4F6F1;
+  --ink:   #16202A;
+  --rule:  #CBD5C8;
+  --moss:  #45633F;
+  --amber: #9A6B15;
 
-  --color-text: #1e293b;
-  --color-text-muted: #64748b;
-  --color-text-subtle: #94a3b8;
+  /* ---- 派生トーン（5値から算出。数値は実測してコントラストを確認済み） ----
+     paper上 ink-soft: 4.98:1 / paper上 moss: 6.21:1 / ink上 ink-on-dark-muted: 6.23:1
+     amber は paper 上で 4.30:1 のため、本文サイズの文字色には使わない
+     （チップ背景・アイコン・境界線などの非テキスト用途に限定。3:1 は十分満たす） */
+  --paper-raised: color-mix(in srgb, var(--ink) 4%, var(--paper));
+  --ink-soft: #646B70;
+  --moss-hover: color-mix(in srgb, var(--moss) 80%, black);
+  --moss-fill: color-mix(in srgb, var(--moss) 12%, var(--paper));
+  --amber-fill: color-mix(in srgb, var(--amber) 14%, var(--paper));
+  --ink-on-dark-muted: #9BA0A1;
+  --rule-on-dark: color-mix(in srgb, var(--paper) 20%, var(--ink));
 
-  --color-accent: #dc2626;
-  --color-accent-hover: #b91c1c;
-  --color-accent-subtle: #fef2f2;
+  /* ---- 互換名（src/components/figures/ の既存参照を壊さないためのエイリアス。
+     図の3色 velocity=#2563eb / force=#dc2626 / geometry=#0f172a は変更しない） ---- */
+  --color-bg: var(--paper);
+  --color-bg-subtle: var(--paper-raised);
+  --color-bg-muted: var(--paper-raised);
+  --color-border: var(--rule);
+  --color-border-strong: var(--rule);
+  --color-text: var(--ink);
+  --color-text-muted: var(--ink-soft);
+  --color-text-subtle: var(--ink-soft);
+  --color-accent: var(--moss);
+  --color-accent-hover: var(--moss-hover);
+  --color-accent-subtle: var(--moss-fill);
+  --color-navy: var(--ink);
+  --color-navy-mid: var(--ink);
 
-  --color-navy: #0f172a;
-  --color-navy-mid: #1e3a5f;
+  /* ---- 書体（3役） ---- */
+  --font-serif: 'Zen Old Mincho', 'Hiragino Mincho ProN', serif;   /* 見出し */
+  --font-sans: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Meiryo', system-ui, sans-serif; /* 本文 */
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;            /* 数値・単位・コード */
 
-  --color-tag-bg: #eff6ff;
-  --color-tag-text: #1d4ed8;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
 
-  --importance-high: #dc2626;
-  --importance-medium: #d97706;
-  --importance-low: #16a34a;
-
-  --font-sans: 'Inter', 'Hiragino Sans', 'Meiryo', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
-
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.06), 0 4px 6px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 2px rgba(22, 32, 42, 0.06);
+  --shadow-md: 0 3px 10px rgba(22, 32, 42, 0.08);
 
   --container-max: 1100px;
   --content-max: 740px;
+  /** 日本語の読みやすい行の長さ（章ページ本文） */
+  --measure: 34em;
 }
 
 /* Reset */
@@ -56,9 +72,9 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1.7;
+  background-color: var(--paper);
+  color: var(--ink);
+  line-height: 1.8;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -73,19 +89,31 @@ a {
   text-decoration: none;
 }
 
+/* キーボードフォーカスは常に見えるようにする */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
 /* ============================================================
    Typography
    ============================================================ */
 
 h1, h2, h3, h4, h5, h6 {
-  line-height: 1.3;
+  font-family: var(--font-serif);
+  line-height: 1.45;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
+  color: var(--ink);
 }
 
 h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
-h2 { font-size: clamp(1.3rem, 3vw, 1.7rem); }
-h3 { font-size: 1.2rem; }
+h2 { font-size: clamp(1.25rem, 3vw, 1.55rem); }
+h3 { font-size: 1.1rem; }
 
 p {
   margin-bottom: 1rem;
@@ -94,8 +122,8 @@ p {
 code {
   font-family: var(--font-mono);
   font-size: 0.875em;
-  background: var(--color-bg-muted);
-  border: 1px solid var(--color-border);
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
   border-radius: var(--radius-sm);
   padding: 0.15em 0.4em;
 }
@@ -112,8 +140,8 @@ pre {
 
 pre:not([style]) {
   /* Shiki が適用されなかった場合のフォールバック */
-  background: var(--color-navy);
-  color: #e2e8f0;
+  background: var(--ink);
+  color: var(--paper);
 }
 
 pre code {
@@ -125,21 +153,21 @@ pre code {
 }
 
 blockquote {
-  border-left: 3px solid var(--color-accent);
+  border-left: 3px solid var(--moss);
   padding: 0.5rem 1rem;
   margin: 1.5rem 0;
-  background: var(--color-accent-subtle);
+  background: var(--moss-fill);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
 blockquote p {
   margin: 0;
-  color: var(--color-text);
+  color: var(--ink);
 }
 
 hr {
   border: none;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--rule);
   margin: 2rem 0;
 }
 
@@ -160,20 +188,20 @@ table {
 }
 
 th {
-  background: var(--color-bg-muted);
+  background: var(--paper-raised);
   font-weight: 600;
   text-align: left;
   padding: 0.6rem 0.9rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--rule);
 }
 
 td {
   padding: 0.6rem 0.9rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--rule);
 }
 
 tr:nth-child(even) td {
-  background: var(--color-bg-subtle);
+  background: color-mix(in srgb, var(--ink) 2%, var(--paper));
 }
 
 /* ============================================================
@@ -186,75 +214,6 @@ tr:nth-child(even) td {
   padding: 0 1.25rem;
 }
 
-.section {
-  padding: 3rem 0;
-}
-
-.section + .section {
-  border-top: 1px solid var(--color-border);
-}
-
-/* ============================================================
-   Badge / Tag Components
-   ============================================================ */
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 0.2em 0.6em;
-  border-radius: var(--radius-sm);
-}
-
-.badge-importance-high {
-  background: #fef2f2;
-  color: var(--importance-high);
-  border: 1px solid #fecaca;
-}
-
-.badge-importance-medium {
-  background: #fffbeb;
-  color: var(--importance-medium);
-  border: 1px solid #fed7aa;
-}
-
-.badge-importance-low {
-  background: #f0fdf4;
-  color: var(--importance-low);
-  border: 1px solid #bbf7d0;
-}
-
-.tag {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 500;
-  background: var(--color-tag-bg);
-  color: var(--color-tag-text);
-  border: 1px solid #bfdbfe;
-  border-radius: var(--radius-sm);
-  padding: 0.15em 0.55em;
-  white-space: nowrap;
-}
-
-.tag:hover {
-  background: #dbeafe;
-}
-
-.category-badge {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 600;
-  background: var(--color-navy);
-  color: #ffffff;
-  border-radius: var(--radius-sm);
-  padding: 0.2em 0.6em;
-  letter-spacing: 0.02em;
-}
-
 /* ============================================================
    Buttons
    ============================================================ */
@@ -265,140 +224,55 @@ tr:nth-child(even) td {
   gap: 0.35rem;
   font-size: 0.875rem;
   font-weight: 600;
-  padding: 0.55em 1.2em;
+  padding: 0.6em 1.25em;
   border-radius: var(--radius-md);
-  border: none;
+  border: 1.5px solid transparent;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
   text-decoration: none;
 }
 
 .btn-primary {
-  background: var(--color-accent);
-  color: #ffffff;
+  background: var(--moss);
+  color: var(--paper);
+  border-color: var(--moss);
 }
 
 .btn-primary:hover {
-  background: var(--color-accent-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  background: var(--moss-hover);
+  border-color: var(--moss-hover);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--color-navy-mid);
-  border: 1.5px solid var(--color-border-strong);
+  color: var(--ink);
+  border-color: var(--rule);
 }
 
 .btn-outline:hover {
-  border-color: var(--color-navy-mid);
-  background: var(--color-bg-subtle);
+  border-color: var(--moss);
+  color: var(--moss);
 }
-
-/* ============================================================
-   Cards
-   ============================================================ */
-
-.card {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
-}
-
-/* ============================================================
-   Grid
-   ============================================================ */
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.25rem;
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.25rem;
-}
-
-/* ============================================================
-   Section Headers
-   ============================================================ */
-
-.section-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-  gap: 1rem;
-}
-
-.section-header h2 {
-  position: relative;
-  padding-left: 0.85rem;
-}
-
-.section-header h2::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.15em;
-  height: 0.85em;
-  width: 3px;
-  background: var(--color-accent);
-  border-radius: 2px;
-}
-
-.section-link {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-accent);
-  white-space: nowrap;
-}
-
-.section-link:hover {
-  text-decoration: underline;
-}
-
-/* ============================================================
-   Importance Indicator
-   ============================================================ */
-
-.importance-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  margin-right: 4px;
-}
-
-.importance-dot-high { background: var(--importance-high); }
-.importance-dot-medium { background: var(--importance-medium); }
-.importance-dot-low { background: var(--importance-low); }
 
 /* ============================================================
    Responsive
    ============================================================ */
 
 @media (max-width: 640px) {
-  .section {
-    padding: 2rem 0;
+  .container {
+    padding: 0 1rem;
   }
+}
 
-  .grid-2, .grid-3 {
-    grid-template-columns: 1fr;
+/* 動きを抑える設定を尊重する */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

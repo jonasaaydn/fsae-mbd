@@ -32,20 +32,19 @@ const base = import.meta.env.BASE_URL;
   }
   .nf-code {
     font-size: clamp(4rem, 14vw, 8rem);
-    font-weight: 800;
+    font-weight: 500;
     line-height: 1;
-    color: var(--color-accent);
+    color: var(--moss);
     font-family: var(--font-mono);
-    letter-spacing: -0.04em;
+    letter-spacing: -0.02em;
   }
   .nf-title {
     font-size: clamp(1.3rem, 4vw, 1.8rem);
-    color: var(--color-navy);
     margin: 0.5rem 0;
   }
   .nf-desc {
-    color: var(--color-text-muted);
-    line-height: 1.8;
+    color: var(--ink-soft);
+    line-height: 1.9;
     margin-bottom: 1rem;
   }
   .nf-actions {
@@ -63,13 +62,13 @@ const base = import.meta.env.BASE_URL;
     font-size: 0.875rem;
   }
   .nf-links a {
-    color: var(--color-text-muted);
+    color: var(--ink-soft);
     text-decoration: underline;
     text-decoration-color: transparent;
     transition: color 0.15s, text-decoration-color 0.15s;
   }
   .nf-links a:hover {
-    color: var(--color-accent);
+    color: var(--moss);
     text-decoration-color: currentColor;
   }
 </style>

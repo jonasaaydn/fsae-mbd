@@ -34,13 +34,14 @@ const base = import.meta.env.BASE_URL;
 <style>
   .page-header {
     padding: 2.5rem 0 2rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--rule);
     margin-bottom: 2rem;
   }
   .page-header h1 { margin-bottom: 0.5rem; }
   .page-desc {
     font-size: 0.95rem;
-    color: var(--color-text-muted);
+    color: var(--ink-soft);
+    line-height: 1.8;
     margin: 0;
   }
   .search-page {
@@ -51,21 +52,21 @@ const base = import.meta.env.BASE_URL;
   /* Pagefind UI の色をサイトデザインに合わせる */
   :root {
     --pagefind-ui-scale: 1;
-    --pagefind-ui-primary: #dc2626;
-    --pagefind-ui-text: var(--color-text);
-    --pagefind-ui-background: var(--color-bg);
-    --pagefind-ui-border: var(--color-border);
-    --pagefind-ui-tag: var(--color-bg-subtle);
+    --pagefind-ui-primary: var(--moss);
+    --pagefind-ui-text: var(--ink);
+    --pagefind-ui-background: var(--paper);
+    --pagefind-ui-border: var(--rule);
+    --pagefind-ui-tag: var(--paper-raised);
     --pagefind-ui-border-width: 1px;
-    --pagefind-ui-border-radius: 8px;
+    --pagefind-ui-border-radius: 6px;
     --pagefind-ui-font: var(--font-sans);
   }
 
   /* 検索入力欄のフォーカス色 */
   :global(.pagefind-ui__search-input:focus) {
-    outline-color: #dc2626;
+    outline-color: var(--moss);
   }
   :global(.pagefind-ui__search-clear) {
-    color: var(--color-text-muted);
+    color: var(--ink-soft);
   }
 </style>

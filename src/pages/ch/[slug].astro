@@ -15,6 +15,11 @@ const part = getPart(d.part);
 const prereqs = await getPrereqChapters(entry);
 const nexts = await getNextChapters(entry);
 const isPublished = d.status === 'published';
+
+// 梯子レール: 48章中の現在位置を実データで示す（章ページの静かな補助装置）
+const allChapters = await getSortedChapters();
+const currentIndex = allChapters.findIndex((c) => c.slug === entry.slug);
+const progressPct = allChapters.length > 1 ? (currentIndex / (allChapters.length - 1)) * 100 : 0;
 ---
 
 <BaseLayout
@@ -23,98 +28,195 @@ const isPublished = d.status === 'published';
   ogType="article"
   canonicalPath={`/ch/${entry.slug}/`}
 >
-  <article class="ch container">
-    <header class="ch-head">
-      <p class="ch-part">第{part.roman}部　{part.title}</p>
-      <h1><span class="ch-no">第{d.chapter}章</span>{d.title}</h1>
-      <p class="ch-summary">{d.summary}</p>
-    </header>
+  <div class="ch-mobile-progress" aria-hidden="true">
+    <div class="ch-mobile-progress-fill" style={`width:${progressPct}%`}></div>
+  </div>
 
-    {!isPublished && (
-      <p class="ch-notice">この章はまだ執筆中です。目次で全体像を確認できます。</p>
-    )}
-
-    <section class="needs">
-      <h2 class="needs-title">この章に必要なもの</h2>
-      <dl class="needs-dl">
-        <dt>ソフトウェア</dt>
-        <dd>{d.software.length ? d.software.join(' / ') : '不要'}</dd>
-        <dt>Toolbox</dt>
-        <dd>{d.toolbox.length ? d.toolbox.join(' / ') : '不要'}</dd>
-        <dt>前提の数学</dt>
-        <dd>{d.math.length ? d.math.join(' / ') : '特になし'}</dd>
-        <dt>前提の章</dt>
-        <dd>
-          {prereqs.length === 0 ? 'なし' : prereqs.map((p) => (
-            p.data.status === 'published'
-              ? <a href={`${base}ch/${p.slug}/`}>第{p.data.chapter}章 {p.data.title}</a>
-              : <span class="pending">第{p.data.chapter}章 {p.data.title}（準備中）</span>
-          ))}
-        </dd>
-      </dl>
-    </section>
-
-    {isPublished && (
-      <div class="ch-body prose" data-pagefind-body>
-        <Content />
+  <div class="ch-layout container">
+    <div class="ladder-col">
+      <div class="ladder" aria-hidden="true">
+        {allChapters.map((c, i) => (
+          <span
+            class:list={[
+              'rung',
+              c.data.status === 'published' && 'is-published',
+              i === currentIndex && 'is-current',
+            ]}
+          ></span>
+        ))}
       </div>
-    )}
+    </div>
 
-    {d.verified_on && (
-      <p class="verified">
-        このコードは {d.verified_on} に実行して出力を確認しています{d.verified_env ? `（${d.verified_env}）` : ''}。
-      </p>
-    )}
+    <article class="ch">
+      <header class="ch-head">
+        <p class="ch-part">第{part.roman}部　{part.title}</p>
+        <h1><span class="ch-no">第{d.chapter}章</span>{d.title}</h1>
+        <p class="ch-summary">{d.summary}</p>
+        <p class="ch-position"><span class="ch-position-label">全体の位置</span><span class="ch-position-frac">{currentIndex + 1} / {allChapters.length}</span></p>
+      </header>
 
-    {nexts.length > 0 && (
-      <nav class="next">
-        <h2 class="next-title">次に読む</h2>
-        <ul>
-          {nexts.map((n) => (
-            <li>
-              {n.data.status === 'published'
-                ? <a href={`${base}ch/${n.slug}/`}>第{n.data.chapter}章 {n.data.title}</a>
-                : <span class="pending">第{n.data.chapter}章 {n.data.title}（準備中）</span>}
-            </li>
-          ))}
-        </ul>
-      </nav>
-    )}
+      {!isPublished && (
+        <p class="ch-notice">この章はまだ執筆中です。目次で全体像を確認できます。</p>
+      )}
 
-    <a href={`${base}curriculum/`} class="back">← 目次に戻る</a>
-  </article>
+      <section class="needs">
+        <h2 class="needs-title">この章に必要なもの</h2>
+        <dl class="needs-dl">
+          <dt>ソフトウェア</dt>
+          <dd>{d.software.length ? d.software.join(' / ') : '不要'}</dd>
+          <dt>Toolbox</dt>
+          <dd>{d.toolbox.length ? d.toolbox.join(' / ') : '不要'}</dd>
+          <dt>前提の数学</dt>
+          <dd>{d.math.length ? d.math.join(' / ') : '特になし'}</dd>
+          <dt>前提の章</dt>
+          <dd>
+            {prereqs.length === 0 ? 'なし' : prereqs.map((p) => (
+              p.data.status === 'published'
+                ? <a href={`${base}ch/${p.slug}/`}>第{p.data.chapter}章 {p.data.title}</a>
+                : <span class="pending">第{p.data.chapter}章 {p.data.title}（準備中）</span>
+            ))}
+          </dd>
+        </dl>
+      </section>
+
+      {isPublished && (
+        <div class="ch-body prose" data-pagefind-body>
+          <Content />
+        </div>
+      )}
+
+      {d.verified_on && (
+        <p class="verified">
+          このコードは {d.verified_on} に実行して出力を確認しています{d.verified_env ? `（${d.verified_env}）` : ''}。
+        </p>
+      )}
+
+      {nexts.length > 0 && (
+        <nav class="next">
+          <h2 class="next-title">次に読む</h2>
+          <ul>
+            {nexts.map((n) => (
+              <li>
+                {n.data.status === 'published'
+                  ? <a href={`${base}ch/${n.slug}/`}>第{n.data.chapter}章 {n.data.title}</a>
+                  : <span class="pending">第{n.data.chapter}章 {n.data.title}（準備中）</span>}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+
+      <a href={`${base}curriculum/`} class="back">← 目次に戻る</a>
+    </article>
+  </div>
 </BaseLayout>
 
 <style>
-  .ch { max-width: 780px; padding-top: 3rem; padding-bottom: 4rem; }
-  .ch-part { font-size: 0.78rem; letter-spacing: 0.06em; color: var(--color-accent); margin: 0 0 0.5rem; }
-  .ch-head h1 { font-size: 1.9rem; line-height: 1.35; color: var(--color-navy); margin: 0 0 0.75rem; }
-  .ch-no { display: block; font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 0.3rem; }
-  .ch-summary { color: var(--color-text-muted); line-height: 1.8; margin: 0 0 1.75rem; }
+  /* ---- モバイル進捗バー（ヘッダ直下・sticky）。梯子レールが畳まれた形 ---- */
+  .ch-mobile-progress {
+    display: none;
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+    height: 3px;
+    background: var(--rule);
+  }
+  .ch-mobile-progress-fill {
+    height: 100%;
+    background: var(--moss);
+  }
+
+  /* ---- レイアウト: 梯子レール + 本文 ---- */
+  .ch-layout {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    gap: 2.25rem;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+    /* align-items は既定の stretch のまま: .ladder-col を本文と同じ高さまで伸ばす。
+       sticky を効かせる要素そのものを引き伸ばすと可動域が無くなるため、
+       「背の高い枠（.ladder-col）」と「その中で貼り付く実体（.ladder）」を分けている */
+  }
+
+  /* 背の高い枠。グリッド行の高さ（=本文の高さ）まで stretch される */
+  .ladder-col { min-width: 0; }
+
+  /* ---- 梯子レール: 48章中の現在位置（静かな補助装置） ---- */
+  .ladder {
+    position: sticky;
+    top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding-top: 0.4rem;
+  }
+  .rung {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+  }
+  .rung.is-published { background: var(--moss); border-color: var(--moss); }
+  .rung.is-current {
+    width: 10px;
+    height: 10px;
+    border-color: var(--moss);
+    box-shadow: 0 0 0 3px var(--moss-fill);
+  }
+
+  .ch { max-width: var(--measure); padding-top: 0; }
+  .ch-part { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--moss); margin: 0 0 0.6rem; }
+  .ch-head h1 { font-size: 1.8rem; line-height: 1.4; margin: 0 0 0.75rem; }
+  .ch-no { display: block; font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 0.35rem; }
+  .ch-summary { color: var(--ink-soft); line-height: 1.9; margin: 0 0 1rem; }
+  .ch-position {
+    display: flex; align-items: baseline; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-soft);
+    margin: 0 0 1.75rem;
+  }
+  .ch-position-label { letter-spacing: 0.04em; }
+  .ch-position-frac { color: var(--moss); font-weight: 700; }
   .ch-notice {
-    background: #fffbeb; border: 1px solid #fed7aa; border-radius: var(--radius-md);
-    padding: 0.8rem 1rem; font-size: 0.9rem; color: #92400e;
+    background: var(--amber-fill); border: 1px solid var(--amber); border-radius: var(--radius-md);
+    padding: 0.8rem 1rem; font-size: 0.9rem; color: var(--ink); margin-bottom: 1.5rem;
   }
   .needs {
-    border: 1px solid var(--color-border); border-radius: var(--radius-lg);
-    padding: 1.1rem 1.3rem; margin-bottom: 2rem; background: var(--color-bg-subtle, #f8fafc);
+    border: 1px solid var(--rule); border-radius: var(--radius-lg);
+    padding: 1.1rem 1.3rem; margin-bottom: 2rem; background: var(--paper-raised);
   }
-  .needs-title { font-size: 0.95rem; color: var(--color-navy); margin: 0 0 0.7rem; }
-  .needs-dl { display: grid; grid-template-columns: 8rem 1fr; gap: 0.4rem 1rem; margin: 0; font-size: 0.88rem; }
-  .needs-dl dt { color: var(--color-text-muted); }
+  .needs-title { font-size: 0.95rem; margin: 0 0 0.7rem; }
+  .needs-dl { display: grid; grid-template-columns: 8rem 1fr; gap: 0.5rem 1rem; margin: 0; font-size: 0.88rem; line-height: 1.7; }
+  .needs-dl dt { color: var(--ink-soft); }
   .needs-dl dd { margin: 0; }
-  .needs-dl dd a { display: block; }
-  .pending { color: var(--color-text-muted); }
+  .needs-dl dd a { display: block; color: var(--moss); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--moss) 45%, transparent); }
+  .pending { color: var(--ink-soft); }
   .verified {
-    font-size: 0.82rem; color: var(--color-text-muted);
-    border-left: 3px solid var(--color-accent); padding-left: 0.8rem; margin-top: 2rem;
+    font-size: 0.82rem; color: var(--ink-soft); line-height: 1.8;
+    border-left: 3px solid var(--moss); padding-left: 0.8rem; margin-top: 2rem;
   }
-  .next { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
-  .next-title { font-size: 1rem; color: var(--color-navy); margin: 0 0 0.6rem; }
-  .next ul { list-style: none; padding: 0; margin: 0; line-height: 2; }
-  .back { display: inline-block; margin-top: 2.5rem; font-size: 0.88rem; }
+  .next { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+  .next-title { font-size: 1rem; margin: 0 0 0.6rem; }
+  .next ul { list-style: none; padding: 0; margin: 0; line-height: 2.1; }
+  .next a { color: var(--moss); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--moss) 45%, transparent); }
+  .back { display: inline-block; margin-top: 2.5rem; font-size: 0.88rem; color: var(--moss); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--moss) 45%, transparent); }
+
+  /* ---- ch-body: 章本文の行間（日本語の適正行間） ---- */
+  .ch-body :global(p) { line-height: 1.95; }
+  .ch-body :global(li) { line-height: 1.95; }
+  .ch-body :global(h2) { margin-top: 2.5rem; margin-bottom: 1rem; }
+  .ch-body :global(h3) { margin-top: 2rem; margin-bottom: 0.75rem; }
+
+  @media (max-width: 800px) {
+    .ch-mobile-progress { display: block; }
+    .ch-layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .ladder-col { display: none; }
+  }
+
   @media (max-width: 560px) {
-    .needs-dl { grid-template-columns: 1fr; gap: 0.15rem; }
+    .needs-dl { grid-template-columns: 1fr; gap: 0.2rem; }
     .needs-dl dt { margin-top: 0.5rem; font-size: 0.78rem; }
   }
 </style>
