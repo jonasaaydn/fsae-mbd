@@ -1679,11 +1679,15 @@ check('「実行すると以下が出力されます」が存在しない', bann
 // 8. 図が埋め込まれている
 check('第1章に図が埋め込まれている', ch1.includes('arrow-geo'));
 
-const failed = results.filter((r) => !r.ok);
+const pendings = results.filter((r) => r.pending);
+const failed = results.filter((r) => !r.ok && !r.pending);
 for (const r of results) {
-  console.log(`${r.ok ? '  OK  ' : '  NG  '} ${r.name}${r.detail ? '  (' + r.detail + ')' : ''}`);
+  const mark = r.pending ? ' 保留 ' : r.ok ? '  OK  ' : '  NG  ';
+  console.log(`${mark} ${r.name}${r.detail ? '  (' + r.detail + ')' : ''}`);
 }
-console.log(`\n${results.length - failed.length} / ${results.length} 項目が合格`);
+const graded = results.length - pendings.length;
+console.log(`\n${graded - failed.length} / ${graded} 項目が合格` + (pendings.length ? `（保留 ${pendings.length} 件）` : ''));
+if (pendings.length) console.log('保留は外部要因待ちで、埋まるまでこの計画は完了しない。');
 process.exit(failed.length === 0 ? 0 : 1);
 ```
 
