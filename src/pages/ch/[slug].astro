@@ -62,7 +62,7 @@ const isPublished = d.status === 'published';
 
     {d.verified_on && (
       <p class="verified">
-        このコードは {d.verified_on} に実行して出力を確認しています（{d.verified_env}）。
+        このコードは {d.verified_on} に実行して出力を確認しています{d.verified_env ? `（${d.verified_env}）` : ''}。
       </p>
     )}
 
