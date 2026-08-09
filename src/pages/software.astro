@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const CHECKED_ON = '2026-08-09';
+
+const ROUTES = [
+  {
+    name: 'MATLAB / Simulink',
+    role: '本サイトの正典。全章の実装例はこれで書きます。',
+    route: '学生フォーミュラ参加チームは MathWorks の Student Competition Software Request から申請すると、MATLAB・Simulink を含む多数の製品を無償で使えます（チーム単位・要指導教員）。',
+    url: 'https://www.mathworks.com/academia/student-competitions/formula-sae.html',
+    note: '個人ではなくチームでの申請になります。まず指導教員に相談してください。',
+  },
+  {
+    name: '大学のキャンパスライセンス',
+    role: 'MATLAB / Simulink',
+    route: '所属大学が Total Academic Headcount ライセンスを契約している場合、大学のメールアドレスで個人アカウントを作れば無償で使えます。',
+    url: 'https://www.mathworks.com/academia/tah-support-program/eligibility.html',
+    note: '大学のメールアドレスで MathWorks アカウントを作り、実際に「Get MATLAB」を試すと契約の有無がその場で分かります（大学名で検索できる公開一覧は存在しません）。分からなければ大学のIT部門か指導教員に確認してください。チーム申請より早い場合があります。',
+  },
+];
+---
+
+<BaseLayout
+  title="必要なソフトウェアと入手方法"
+  description="本サイトの章で使う MATLAB / Simulink と、学生フォーミュラチームが無償で入手する方法をまとめています。"
+  canonicalPath="/software/"
+>
+  <article class="sw container">
+    <h1>必要なソフトウェアと入手方法</h1>
+    <p class="lead">
+      本サイトの実装例は <strong>MATLAB / Simulink</strong> で書きます。レース車両開発の実務で使われている
+      ためで、学んだことがそのまま現場で通用することを優先しました。
+      有償のソフトですが、<strong>学生フォーミュラチームには無償の入手経路があります</strong>。
+    </p>
+
+    {ROUTES.map((r) => (
+      <section class="route">
+        <h2>{r.name}</h2>
+        <p class="role">{r.role}</p>
+        <p class="how">{r.route}</p>
+        <p class="note">{r.note}</p>
+        <a href={r.url} target="_blank" rel="noopener noreferrer" class="link">申請ページを開く ↗</a>
+        <p class="checked">この情報の確認日: {CHECKED_ON}</p>
+      </section>
+    ))}
+
+    <section class="route">
+      <h2>Toolbox について</h2>
+      <p class="how">
+        章によっては MATLAB 本体に加えて Toolbox が必要になります。各章の冒頭にある
+        「この章に必要なもの」に、必要な Toolbox を明記しています。読み始める前に確認してください。
+        Toolbox が無い場合の代替手段がある章では、その方法も本文に書きます。
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .sw { max-width: 760px; padding-top: 3rem; padding-bottom: 4rem; }
+  .sw h1 { font-size: 2rem; color: var(--color-navy); margin: 0 0 1rem; }
+  .lead { line-height: 1.85; margin: 0 0 2.5rem; }
+  .route {
+    border: 1px solid var(--color-border); border-radius: var(--radius-lg);
+    padding: 1.3rem 1.5rem; margin-bottom: 1.25rem;
+  }
+  .route h2 { font-size: 1.1rem; color: var(--color-navy); margin: 0 0 0.4rem; }
+  .role { font-size: 0.82rem; color: var(--color-accent); margin: 0 0 0.7rem; }
+  .how { line-height: 1.8; margin: 0 0 0.6rem; }
+  .note { font-size: 0.86rem; color: var(--color-text-muted); margin: 0 0 0.9rem; }
+  .link { font-size: 0.9rem; font-weight: 600; }
+  .checked { font-size: 0.75rem; color: var(--color-text-subtle); margin: 0.8rem 0 0; }
+</style>

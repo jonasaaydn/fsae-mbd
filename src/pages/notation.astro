@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 全章で使う記号の定義。章を書くたびにここへ追記する。
+const GROUPS = [
+  {
+    title: '座標系と車体の運動',
+    rows: [
+      ['x', '車両前後方向（前方が正）', 'm'],
+      ['y', '車両横方向（ISO 8855 では左が正）', 'm'],
+      ['z', '車両上下方向（ISO 8855 では上が正）', 'm'],
+      ['V', '車速（重心の速度）', 'm/s'],
+      ['β', '車体すべり角', 'rad'],
+      ['r', 'ヨーレート', 'rad/s'],
+      ['a_x', '前後加速度', 'm/s²'],
+      ['a_y', '横加速度', 'm/s²'],
+    ],
+  },
+  {
+    title: 'タイヤ',
+    rows: [
+      ['α', 'スリップ角', 'rad'],
+      ['κ', 'スリップ率', '—'],
+      ['F_x', 'タイヤ前後力', 'N'],
+      ['F_y', 'タイヤ横力（コーナリングフォース）', 'N'],
+      ['F_z', 'タイヤ接地荷重', 'N'],
+      ['C_α', 'コーナリングスティフネス', 'N/rad'],
+      ['B', 'Magic Formula の剛性係数', '—'],
+      ['C', 'Magic Formula の形状係数', '—'],
+      ['D', 'Magic Formula のピーク値', 'N'],
+      ['E', 'Magic Formula の曲率係数', '—'],
+      ['μ', '摩擦係数', '—'],
+    ],
+  },
+  {
+    title: '車両諸元',
+    rows: [
+      ['m', '車両質量', 'kg'],
+      ['I_z', 'ヨー慣性モーメント', 'kg·m²'],
+      ['l_f', '重心〜前軸距離', 'm'],
+      ['l_r', '重心〜後軸距離', 'm'],
+      ['L', 'ホイールベース（l_f + l_r）', 'm'],
+      ['h', '重心高', 'm'],
+      ['δ', '前輪実舵角', 'rad'],
+    ],
+  },
+  {
+    title: '空力',
+    rows: [
+      ['C_L', '空力の鉛直力係数。本サイトは ダウンフォース（−z 方向の力）を正 と定義する。z 上向き正の運動方程式へ入れるときは F_z,aero = −½·ρ·V²·A·C_L と符号を反転させること', '—'],
+      ['C_D', '抗力係数', '—'],
+      ['A', '前面投影面積', 'm²'],
+      ['ρ', '空気密度', 'kg/m³'],
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="記号表"
+  description="本サイトの全章で使う記号の定義と単位。ISO 8855 を基本とし、SAE J670 との差異を明記します。"
+  canonicalPath="/notation/"
+>
+  <article class="nt container">
+    <h1>記号表</h1>
+    <p class="lead">
+      本サイトは <strong>ISO 8855</strong> の符号規約を基本とします。
+      SAE J670 とは y 軸と z 軸の向きが逆になるため、実測データや文献を読むときは
+      どちらの規約かを必ず確認してください。ここを取り違えると、結論が反転します。
+    </p>
+
+    {GROUPS.map((g) => (
+      <section class="grp">
+        <h2>{g.title}</h2>
+        <table>
+          <thead><tr><th>記号</th><th>意味</th><th>単位</th></tr></thead>
+          <tbody>
+            {g.rows.map(([sym, desc, unit]) => (
+              <tr><td class="sym">{sym}</td><td>{desc}</td><td class="unit">{unit}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    ))}
+  </article>
+</BaseLayout>
+
+<style>
+  .nt { max-width: 760px; padding-top: 3rem; padding-bottom: 4rem; }
+  .nt h1 { font-size: 2rem; color: var(--color-navy); margin: 0 0 1rem; }
+  .lead { line-height: 1.85; color: var(--color-text); margin: 0 0 2.5rem; }
+  .grp { margin-bottom: 2.25rem; }
+  .grp h2 {
+    font-size: 1.15rem; color: var(--color-navy); margin: 0 0 0.7rem;
+    border-left: 4px solid var(--color-accent); padding-left: 0.65rem;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--color-border); }
+  th { font-size: 0.78rem; color: var(--color-text-muted); font-weight: 600; }
+  .sym { font-family: var(--font-mono); font-weight: 600; white-space: nowrap; }
+  .unit { font-family: var(--font-mono); color: var(--color-text-muted); white-space: nowrap; }
+</style>
