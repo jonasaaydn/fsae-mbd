@@ -10,7 +10,6 @@ const firstPublished = groups.flatMap((g) => g.chapters).find((c) => c.data.stat
 
 <BaseLayout title="ホーム">
   <section class="hero container">
-    <p class="hero-eyebrow">Model-Based Development for Formula SAE</p>
     <h1>学生フォーミュラのモデルベース開発</h1>
     <p class="lead">
       タイヤが力を出す仕組みから、ラップタイムシミュレーション、ドライバーが乗って評価する
@@ -54,11 +53,6 @@ const firstPublished = groups.flatMap((g) => g.chapters).find((c) => c.data.stat
 
 <style>
   .hero { padding: 4rem 1.25rem 3rem; max-width: 760px; }
-  .hero-eyebrow {
-    font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase; color: var(--moss);
-    margin: 0 0 0.9rem;
-  }
   .hero h1 { font-size: clamp(1.7rem, 4.5vw, 2.5rem); margin: 0 0 1.1rem; line-height: 1.45; }
   .lead { line-height: 1.95; color: var(--ink); margin: 0 0 1.25rem; }
   .progress { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-soft); margin: 0 0 1.75rem; }
