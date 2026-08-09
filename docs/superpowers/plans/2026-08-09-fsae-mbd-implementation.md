@@ -861,10 +861,11 @@ ls src/content/chapters/*.mdx | wc -l
 
 ```bash
 npm run build
-grep -c 'ch-item' dist/curriculum/index.html
+grep -o '<li class="ch-item' dist/curriculum/index.html | wc -l
 ```
 
-期待: `48`。
+期待: `48`。（`grep -c 'ch-item'` は使わない。この文字列は Astro のスコープ付き
+`<style>` にも出るため、実際の章数より多く数えてしまう）
 
 - [ ] **Step 4: 前提章の slug がすべて実在することを確認する**
 
@@ -1607,10 +1608,14 @@ const chDir = join(DIST, 'ch');
 const chCount = existsSync(chDir) ? readdirSync(chDir).length : 0;
 check('48章すべてがページ化されている', chCount === 48, `実際: ${chCount}`);
 
-// 3. 目次に48章が並んでいる
+// 3. 目次に48章が並び、6部すべての見出しが出ている
+// 注意: 'ch-item' という文字列は Astro のスコープ付き <style> にも出るため、
+// 素朴に数えると実際より多くなる。開始タグに固定して数える。
 const toc = read('curriculum/index.html') ?? '';
-const tocItems = (toc.match(/ch-item/g) ?? []).length;
+const tocItems = (toc.match(/<li class="ch-item/g) ?? []).length;
 check('目次に48章が並ぶ', tocItems === 48, `実際: ${tocItems}`);
+const tocParts = (toc.match(/<h2 class="part-title"/g) ?? []).length;
+check('目次に6部の見出しが出ている', tocParts === 6, `実際: ${tocParts}`);
 
 // 4. 未執筆章が「準備中」として成立している
 const planned = read('ch/48-data-correlation/index.html') ?? '';
