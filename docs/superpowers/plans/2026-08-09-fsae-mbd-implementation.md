@@ -641,6 +641,7 @@ const { number, caption, viewBox = '0 0 560 340' } = Astro.props;
   .fig :global(.vel)   { stroke: #2563eb; stroke-width: 2.6; fill: none; }
   .fig :global(.force) { stroke: #dc2626; stroke-width: 2.6; fill: none; }
   .fig :global(.body)  { fill: #e2e8f0; stroke: #0f172a; stroke-width: 2; }
+  .fig :global(.dot)   { fill: #0f172a; }
   .fig :global(text)   { font-family: system-ui, sans-serif; font-size: 13px; fill: #0f172a; }
   .fig :global(.lbl-vel)   { fill: #2563eb; }
   .fig :global(.lbl-force) { fill: #dc2626; }
@@ -688,7 +689,7 @@ const caption = isISO
   <text class="lbl-sub" x="292" y={isISO ? 74 : 264}>{yLabel}</text>
 
   <!-- 原点 -->
-  <circle cx="280" cy="150" r="4" fill="#0f172a" />
+  <circle class="dot" cx="280" cy="150" r="4" />
   <text class="lbl-sub" x="292" y="140">重心（原点）</text>
 
   <!-- z の向きの注記 -->
