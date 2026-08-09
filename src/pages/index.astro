@@ -96,16 +96,16 @@ const firstPublished = groups.flatMap((g) => g.chapters).find((c) => c.data.stat
     background: var(--paper);
     transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
   }
-  .vnode:hover { border-color: var(--moss); transform: translateY(-2px); }
+  .vnode:hover { border-color: var(--clay); transform: translateY(-2px); }
   .vnode.is-active,
   .vnode.is-complete {
-    border-color: var(--moss);
-    background: var(--moss-fill);
+    border-color: var(--clay);
+    background: var(--clay-fill);
   }
 
   .vnode-roman {
     font-family: var(--font-mono); font-weight: 700; font-size: 1.3rem;
-    color: var(--moss); line-height: 1;
+    color: var(--clay-text); line-height: 1;
   }
   .vnode-title {
     font-family: var(--font-serif); font-size: 0.86rem; line-height: 1.5;
@@ -120,7 +120,7 @@ const firstPublished = groups.flatMap((g) => g.chapters).find((c) => c.data.stat
     display: block; height: 4px; border-radius: 2px;
     background: var(--rule); overflow: hidden;
   }
-  .vnode-fill { display: block; height: 100%; background: var(--moss); }
+  .vnode-fill { display: block; height: 100%; background: var(--clay); }
 
   /* ---- narrow screens: V collapses to a single vertical list, top → bottom in part order ---- */
   @media (max-width: 720px) {

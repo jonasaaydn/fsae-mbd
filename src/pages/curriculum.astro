@@ -56,11 +56,11 @@ const STATUS_LABEL = { planned: '準備中', draft: '執筆中', published: '' }
   .part-title {
     display: flex; align-items: baseline; gap: 0.65rem; flex-wrap: wrap;
     font-size: 1.2rem; margin: 0 0 0.3rem;
-    border-left: 3px solid var(--moss); padding-left: 0.7rem;
+    border-left: 3px solid var(--clay); padding-left: 0.7rem;
   }
   .part-roman {
     font-family: var(--font-mono); font-size: 1rem; font-weight: 700;
-    letter-spacing: 0.04em; color: var(--moss);
+    letter-spacing: 0.04em; color: var(--clay-text);
   }
   .part-count {
     margin-left: auto; font-family: var(--font-mono); font-size: 0.85rem;
@@ -77,13 +77,13 @@ const STATUS_LABEL = { planned: '準備中', draft: '執筆中', published: '' }
     font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-soft);
   }
   .ch-title { font-size: 0.95rem; }
-  .ch-item a.ch-title { color: var(--moss); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--moss) 45%, transparent); text-underline-offset: 0.15em; }
-  .ch-item a.ch-title:hover { text-decoration-color: var(--moss); }
+  .ch-item a.ch-title { color: var(--clay-text); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--clay) 45%, transparent); text-underline-offset: 0.15em; }
+  .ch-item a.ch-title:hover { text-decoration-color: var(--clay); }
   .is-planned .ch-title, .is-draft .ch-title { color: var(--ink-soft); }
   .ch-status {
     margin-left: auto; flex-shrink: 0;
     font-size: 0.7rem; color: var(--ink);
-    border: 1px solid var(--amber); background: var(--amber-fill);
+    border: 1px solid var(--muted); background: var(--muted-fill);
     border-radius: var(--radius-sm);
     padding: 0.15em 0.55em;
   }

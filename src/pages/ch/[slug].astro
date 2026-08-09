@@ -123,7 +123,7 @@ const progressPct = allChapters.length > 1 ? (currentIndex / (allChapters.length
   }
   .ch-mobile-progress-fill {
     height: 100%;
-    background: var(--moss);
+    background: var(--clay);
   }
 
   /* ---- レイアウト: 梯子レール + 本文 ---- */
@@ -159,16 +159,16 @@ const progressPct = allChapters.length > 1 ? (currentIndex / (allChapters.length
     background: var(--paper);
     border: 1.5px solid var(--rule);
   }
-  .rung.is-published { background: var(--moss); border-color: var(--moss); }
+  .rung.is-published { background: var(--clay); border-color: var(--clay); }
   .rung.is-current {
     width: 10px;
     height: 10px;
-    border-color: var(--moss);
-    box-shadow: 0 0 0 3px var(--moss-fill);
+    border-color: var(--clay);
+    box-shadow: 0 0 0 3px var(--clay-fill);
   }
 
   .ch { max-width: var(--measure); padding-top: 0; }
-  .ch-part { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--moss); margin: 0 0 0.6rem; }
+  .ch-part { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--clay-text); margin: 0 0 0.6rem; }
   .ch-head h1 { font-size: 1.8rem; line-height: 1.4; margin: 0 0 0.75rem; }
   .ch-no { display: block; font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 0.35rem; }
   .ch-summary { color: var(--ink-soft); line-height: 1.9; margin: 0 0 1rem; }
@@ -178,9 +178,9 @@ const progressPct = allChapters.length > 1 ? (currentIndex / (allChapters.length
     margin: 0 0 1.75rem;
   }
   .ch-position-label { letter-spacing: 0.04em; }
-  .ch-position-frac { color: var(--moss); font-weight: 700; }
+  .ch-position-frac { color: var(--clay-text); font-weight: 700; }
   .ch-notice {
-    background: var(--amber-fill); border: 1px solid var(--amber); border-radius: var(--radius-md);
+    background: var(--muted-fill); border: 1px solid var(--muted); border-radius: var(--radius-md);
     padding: 0.8rem 1rem; font-size: 0.9rem; color: var(--ink); margin-bottom: 1.5rem;
   }
   .needs {
@@ -191,17 +191,17 @@ const progressPct = allChapters.length > 1 ? (currentIndex / (allChapters.length
   .needs-dl { display: grid; grid-template-columns: 8rem 1fr; gap: 0.5rem 1rem; margin: 0; font-size: 0.88rem; line-height: 1.7; }
   .needs-dl dt { color: var(--ink-soft); }
   .needs-dl dd { margin: 0; }
-  .needs-dl dd a { display: block; color: var(--moss); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--moss) 45%, transparent); }
+  .needs-dl dd a { display: block; color: var(--clay-text); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--clay) 45%, transparent); }
   .pending { color: var(--ink-soft); }
   .verified {
     font-size: 0.82rem; color: var(--ink-soft); line-height: 1.8;
-    border-left: 3px solid var(--moss); padding-left: 0.8rem; margin-top: 2rem;
+    border-left: 3px solid var(--clay); padding-left: 0.8rem; margin-top: 2rem;
   }
   .next { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
   .next-title { font-size: 1rem; margin: 0 0 0.6rem; }
   .next ul { list-style: none; padding: 0; margin: 0; line-height: 2.1; }
-  .next a { color: var(--moss); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--moss) 45%, transparent); }
-  .back { display: inline-block; margin-top: 2.5rem; font-size: 0.88rem; color: var(--moss); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--moss) 45%, transparent); }
+  .next a { color: var(--clay-text); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--clay) 45%, transparent); }
+  .back { display: inline-block; margin-top: 2.5rem; font-size: 0.88rem; color: var(--clay-text); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--clay) 45%, transparent); }
 
   /* ---- ch-body: 章本文の行間（日本語の適正行間） ---- */
   .ch-body :global(p) { line-height: 1.95; }
