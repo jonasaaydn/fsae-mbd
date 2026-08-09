@@ -1,0 +1,62 @@
+---
+import FigureFrame from './FigureFrame.astro';
+
+interface Props {
+  number?: string;
+}
+const { number = '2-2' } = Astro.props;
+
+const caption =
+  '接地パッチを上から見た模式図（転がり方向が +x）。トレッド要素はリーディングエッジで路面に貼り付き（粘着域）、タイヤ本体から見た横方向のたわみ（中心線からのずれ）を蓄積しながらトレーリングエッジへ向かう。たわみが局所的な摩擦限界（μ·q_z）を超えると、その要素は滑り始め（すべり域）、たわみの増え方は破線（摩擦限界が無ければ続いたはずの直線）より緩やかになる。';
+---
+
+<FigureFrame number={number} caption={caption} viewBox="0 0 560 400">
+  <!-- 接地パッチの外形 -->
+  <rect class="body" x="90" y="150" width="380" height="160" rx="6" />
+
+  <!-- 転がり方向の矢印 -->
+  <line class="geo" x1="360" y1="95" x2="458" y2="95" marker-end="url(#arrow-geo)" />
+  <text class="lbl-sub" x="360" y="83">転がり方向（+x）</text>
+
+  <!-- 中心線（たわみゼロの基準。ホイール面を接地パッチへ投影した位置） -->
+  <text class="lbl-sub" x="90" y="138">中心線（たわみ 0 の基準）</text>
+  <line class="guide" x1="90" y1="175" x2="470" y2="175" />
+
+  <!-- 境界（粘着域→すべり域）の縦ガイドと点 -->
+  <line class="guide" x1="300" y1="150" x2="300" y2="310" />
+  <circle class="dot" cx="300" cy="245" r="4" />
+  <text class="lbl-sub" x="308" y="225">境界点</text>
+
+  <!-- ゾーンラベル -->
+  <text class="lbl-sub" x="412" y="197" text-anchor="middle">粘着域</text>
+  <text class="lbl-sub" x="232" y="197" text-anchor="middle">すべり域</text>
+
+  <!-- 摩擦限界が無ければ続いたはずの直線（仮想・破線） -->
+  <line class="guide" x1="300" y1="245" x2="150" y2="307" />
+  <text class="lbl-sub" x="152" y="300">摩擦限界が無い場合（仮想）</text>
+
+  <!-- 実際のたわみ曲線: 粘着域は直線、すべり域は傾きが緩やかになる -->
+  <path class="force" d="M 470 175 L 300 245 Q 195 265 90 285" />
+
+  <!-- ブラシ（トレッド要素）を表す短い線 -->
+  <line class="geo" x1="440" y1="175" x2="440" y2="187.4" />
+  <line class="geo" x1="380" y1="175" x2="380" y2="212" />
+  <line class="geo" x1="320" y1="175" x2="320" y2="236.8" />
+  <line class="geo" x1="260" y1="175" x2="260" y2="252.6" />
+  <line class="geo" x1="200" y1="175" x2="200" y2="264" />
+  <line class="geo" x1="140" y1="175" x2="140" y2="275.5" />
+
+  <!-- リーディングエッジ／トレーリングエッジのラベル -->
+  <line class="guide" x1="470" y1="150" x2="470" y2="320" />
+  <text class="lbl-sub" x="468" y="332" text-anchor="end">リーディングエッジ</text>
+  <text class="lbl-sub" x="468" y="346" text-anchor="end">（接地開始・たわみ 0）</text>
+
+  <line class="guide" x1="90" y1="150" x2="90" y2="320" />
+  <text class="lbl-sub" x="92" y="332">トレーリングエッジ</text>
+  <text class="lbl-sub" x="92" y="346">（接地終了）</text>
+
+  <!-- 合力 F_y（各要素の局所力を積分した結果） -->
+  <line class="force" x1="280" y1="310" x2="280" y2="362" marker-end="url(#arrow-force)" />
+  <text class="sym lbl-force" x="290" y="368">F<tspan baseline-shift="sub" font-size="0.7em">y</tspan></text>
+  <text class="lbl-sub" x="290" y="382">局所力を接地パッチ全体で積分した合力</text>
+</FigureFrame>
