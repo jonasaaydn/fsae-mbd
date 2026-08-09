@@ -1,0 +1,98 @@
+---
+import FigureFrame from './FigureFrame.astro';
+
+interface Props {
+  number?: string;
+}
+const { number = '4-1' } = Astro.props;
+
+const caption =
+  '定常円旋回の模式図（上段。ISO 8855：画面右が +x／車両前方、画面上が +y／車両左。角度は見やすさのため誇張してある）と、' +
+  'アンダーステア車（A_sf>0）のヨーレートゲイン r/δ の速度依存性の模式図（下段）。' +
+  '上段：旋回中心Oのまわりを半径Rで定常旋回する車両を上から見た図。前輪は中心線から舵角δだけ切れており、' +
+  '重心の速度ベクトルVは中心線から車体すべり角βだけ傾く。前後軸接地点の速度ベクトル（青、中心線または前輪の向きから' +
+  'スリップ角α_f・α_rだけ傾く）を示す。下段：ヨーレートゲインr/δは速度Vとともに増加したのち特性速度V_chでピークを迎え、' +
+  'その後は緩やかに減少する（理論の節で導出する d/dV[(V/l)/(1+A_sf V²)]=0 の条件そのもの）。';
+---
+
+<FigureFrame number={number} caption={caption} viewBox="0 0 700 690">
+  <!-- ===== 上段: 定常円旋回のジオメトリ ===== -->
+
+  <!-- 旋回中心 O と半径 R -->
+  <circle class="dot" cx="300" cy="70" r="4" />
+  <text class="lbl-sub" x="312" y="64">旋回中心 O</text>
+  <text class="lbl-sub" x="312" y="80">（左旋回の例）</text>
+  <line class="guide" x1="300" y1="70" x2="300" y2="300" />
+  <text class="sym" x="308" y="188">R</text>
+
+  <!-- 車両中心線（後軸〜前軸）と、delta・alpha_f の角度基準となるダッシュ延長線 -->
+  <line class="geo" x1="150" y1="300" x2="460" y2="300" />
+  <line class="guide" x1="460" y1="300" x2="515" y2="300" />
+
+  <!-- 前輪（舵角 delta だけ回転したタイヤの簡略表現） -->
+  <line class="geo" x1="450.5" y1="284.7" x2="469.5" y2="315.3" style="stroke-width:4" />
+  <text class="lbl-sub" x="482" y="336">前輪（舵角 δ）</text>
+
+  <!-- 後輪（舵角なし。中心線と同じ向き） -->
+  <line class="geo" x1="150" y1="282" x2="150" y2="318" style="stroke-width:4" />
+  <text class="lbl-sub" x="60" y="274">後輪（舵角なし）</text>
+
+  <!-- 前軸接地点の速度ベクトル（ラベルはキャプションに譲る） -->
+  <line class="vel" x1="460" y1="300" x2="564.0" y2="285.4" marker-end="url(#arrow-vel)" />
+
+  <!-- 後軸接地点の速度ベクトル（ラベルはキャプションに譲る） -->
+  <line class="vel" x1="150" y1="300" x2="254.4" y2="311.0" marker-end="url(#arrow-vel)" />
+
+  <!-- 重心の速度ベクトル V（中心線から beta だけ傾く） -->
+  <line class="vel" x1="300" y1="300" x2="413.3" y2="280.0" marker-end="url(#arrow-vel)" />
+  <text class="sym lbl-vel" x="418" y="274">V</text>
+
+  <!-- 角度: delta（中心線の延長 -> 前輪の向き） -->
+  <path class="guide" d="M 480.0,300 A 20 20 0 0 1 476.1,289.4" />
+  <text class="sym" x="497" y="308">δ</text>
+
+  <!-- 角度: alpha_f（前輪の向き -> 前軸接地点の速度） -->
+  <path class="guide" d="M 505.6,293.6 A 46 46 0 0 1 499.0,275.6" />
+  <text class="sym" x="522" y="272">α<tspan baseline-shift="sub" font-size="0.7em">f</tspan></text>
+
+  <!-- 角度: beta（中心線 -> 重心の速度 V） -->
+  <path class="guide" d="M 338,300 A 38 38 0 0 1 337.4,293.4" />
+  <text class="sym" x="345" y="290">β</text>
+
+  <!-- 角度: alpha_r（中心線（後輪の向き） -> 後軸接地点の速度） -->
+  <path class="guide" d="M 187.8,304.0 A 38 38 0 0 1 188.0,300.0" />
+  <text class="sym" x="192" y="316">α<tspan baseline-shift="sub" font-size="0.7em">r</tspan></text>
+
+  <!-- 重心 -->
+  <circle class="dot" cx="300" cy="300" r="4" />
+  <text class="lbl-sub" x="270" y="322">重心 CG</text>
+
+  <!-- 軸位置の寸法線: l_r（後軸〜重心）と l_f（重心〜前軸） -->
+  <line class="guide" x1="150" y1="332" x2="150" y2="372" />
+  <line class="guide" x1="300" y1="332" x2="300" y2="372" />
+  <line class="guide" x1="460" y1="332" x2="460" y2="372" />
+  <line class="geo" x1="150" y1="372" x2="300" y2="372" marker-start="url(#arrow-geo)" marker-end="url(#arrow-geo)" />
+  <line class="geo" x1="300" y1="372" x2="460" y2="372" marker-start="url(#arrow-geo)" marker-end="url(#arrow-geo)" />
+  <text class="sym" x="225" y="392" text-anchor="middle">l<tspan baseline-shift="sub" font-size="0.7em">r</tspan></text>
+  <text class="sym" x="380" y="392" text-anchor="middle">l<tspan baseline-shift="sub" font-size="0.7em">f</tspan></text>
+
+  <!-- ===== 下段: ヨーレートゲイン r/δ の速度依存（模式図） ===== -->
+
+  <text class="lbl-sub" x="150" y="463">アンダーステア（A<tspan baseline-shift="sub" font-size="0.7em">sf</tspan>&gt;0）の場合</text>
+
+  <!-- 軸 -->
+  <line class="geo" x1="100" y1="640" x2="100" y2="480" marker-end="url(#arrow-geo)" />
+  <line class="geo" x1="100" y1="640" x2="640" y2="640" marker-end="url(#arrow-geo)" />
+  <text class="sym" x="50" y="482">r/δ</text>
+  <text class="sym" x="650" y="638">V</text>
+  <text class="lbl-sub" x="94" y="652" text-anchor="end">0</text>
+
+  <!-- ゲイン曲線: 低速でほぼ線形に増加 -> 特性速度 V_ch でピーク -> 高速でゆるやかに減少 -->
+  <path class="vel" d="M 100,640 C 160,590 240,520 340,500 C 410,500 480,530 640,560" />
+
+  <!-- ピーク（V_ch）の位置を示すガイドと点 -->
+  <circle class="dot" cx="340" cy="500" r="4" />
+  <line class="guide" x1="340" y1="500" x2="340" y2="640" />
+  <line class="guide" x1="100" y1="500" x2="340" y2="500" />
+  <text class="sym" x="340" y="662" text-anchor="middle">V<tspan baseline-shift="sub" font-size="0.7em">ch</tspan></text>
+</FigureFrame>
