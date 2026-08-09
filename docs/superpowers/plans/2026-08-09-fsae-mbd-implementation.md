@@ -23,6 +23,24 @@
 
 ---
 
+## 前提条件（Task 1 より前に完了していること）
+
+- [ ] **記事生成ルーティンを停止する**（運営者の作業）
+
+  claude.ai/code/routines で、記事を生成するルーティン6本（text / 8am / 12pm /
+  student-midnight / student-8am / student-12pm）と roundup・glossary・QA・weekly を停止する。
+  **linkcheck だけ残す**。
+
+  **なぜ Task 8 より前でなければならないか**: Task 8 で `src/content/blog/` を削除するが、
+  その後にルーティンが発火すると GitHub API 経由で削除したディレクトリに記事を書き戻す。
+  さらに Task 9 でリポジトリを改称すると、ルーティンは旧名 `mbd-ai-lab` を叩き続けて
+  失敗するか、予期しない場所に書き込む。
+
+- [x] **main ブランチで直接作業することに運営者が同意済み**（2026-08-09）。
+  デプロイが main への push で発火し、Task 9・12 の本番検証がそのまま行えるため。
+
+---
+
 ## File Structure
 
 | ファイル | 責務 |
@@ -1680,13 +1698,15 @@ done
 > Search Console で `https://jonasaaydn.github.io/fsae-mbd/` を URL プレフィックスとして追加し、
 > 所有権確認（HTMLタグは既に埋め込み済み）のあと、サイトマップ `sitemap-index.xml` を送信してください。
 
-- [ ] **Step 7: 旧ルーティンを停止する**
+- [ ] **Step 7: ルーティンが停止していることを確認する**
 
-運営者に次を依頼する。
+停止は前提条件（Task 1 より前）で完了しているはずなので、ここでは結果を確認する。
 
-> claude.ai/code/routines で、記事を生成するルーティン6本（text / 8am / 12pm / student-midnight /
-> student-8am / student-12pm）と roundup・glossary・QA・weekly を停止してください。
-> linkcheck だけ残します。
+```bash
+git log --oneline --since='7 days ago' --grep='自動記事追加' | wc -l
+```
+
+期待: `0`。1件以上あれば停止できていないので、運営者に再確認を依頼する。
 
 ---
 
