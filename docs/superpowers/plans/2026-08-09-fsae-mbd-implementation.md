@@ -840,7 +840,7 @@ for (const [chapter, part, slug, title, summary, prereq] of CH) {
     'math: []',
     '---',
     '',
-    '<!-- この章はまだ執筆していません。8ブロックのテンプレートに沿って書きます。 -->',
+    '{/* この章はまだ執筆していません。8ブロックのテンプレートに沿って書きます。 */}',
     '',
   ].join('\n');
   writeFileSync(path, fm, 'utf8');
