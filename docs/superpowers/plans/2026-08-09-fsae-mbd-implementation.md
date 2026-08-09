@@ -663,13 +663,13 @@ interface Props {
 }
 const { convention = 'ISO', number } = Astro.props;
 
-// ISO: z 下向き / SAE: z 上向き。y の向きも反転する
+// ISO 8855 は Z-up（y 左・z 上）、従来の SAE J670e は Z-down（y 右・z 下）
 const isISO = convention === 'ISO';
 const yLabel = isISO ? '右' : '左';
 const zText  = isISO ? 'z は下向き（紙面裏）' : 'z は上向き（紙面手前）';
 const caption = isISO
-  ? '車両座標系（ISO 8855）。x 前方・y 右・z 下向き。'
-  : '車両座標系（SAE J670）。x 前方・y 左・z 上向き。ISO と y・z の向きが逆になる。';
+  ? '車両座標系（ISO 8855）。x 前方・y 左・z 上向き（Z-up）。'
+  : '車両座標系（従来の SAE J670e）。x 前方・y 右・z 下向き（Z-down）。ISO と y・z の向きが逆になる。';
 ---
 
 <FigureFrame number={number} caption={caption} viewBox="0 0 560 300">
@@ -731,7 +731,7 @@ npm run dev
 
 - ラベルが枠外にはみ出していない
 - 矢印と文字が重なっていない
-- 軸の向きが ISO（x 前方・y 右）になっている
+- 軸の向きが ISO 8855（x 前方・y 左・z 上）になっている
 
 確認できたら `Ctrl+C` で dev サーバーを止める。
 
@@ -920,8 +920,8 @@ const GROUPS = [
     title: '座標系と車体の運動',
     rows: [
       ['x', '車両前後方向（前方が正）', 'm'],
-      ['y', '車両横方向（ISO では右が正）', 'm'],
-      ['z', '車両上下方向（ISO では下が正）', 'm'],
+      ['y', '車両横方向（ISO 8855 では左が正）', 'm'],
+      ['z', '車両上下方向（ISO 8855 では上が正）', 'm'],
       ['V', '車速（重心の速度）', 'm/s'],
       ['β', '車体すべり角', 'rad'],
       ['r', 'ヨーレート', 'rad/s'],
@@ -1449,15 +1449,15 @@ import CoordinateSystem from './CoordinateSystem.astro';
 
 ```matlab
 % ISO 8855 と SAE J670 の相互変換
-% ISO: x 前方 / y 右 / z 下向き
-% SAE: x 前方 / y 左 / z 上向き
+% ISO 8855: x 前方 / y 左 / z 上向き（Z-up）
+% SAE J670e（従来）: x 前方 / y 右 / z 下向き（Z-down）
 % → y と z の符号が反転する（x は共通）
 
 T = diag([1, -1, -1]);   % ISO <-> SAE の変換行列（自分自身が逆行列）
 
 % 例: 右旋回中の横加速度と ヨーレート（ISO 表記）
-a_y_iso = 8.5;    % m/s^2  右向きが正
-r_iso   = 0.62;   % rad/s  上から見て時計回りが正（z 下向きのため）
+a_y_iso = 8.5;    % m/s^2  左向きが正（ISO 8855）
+r_iso   = 0.62;   % rad/s  上から見て反時計回りが正（z 上向きのため）
 
 v_iso = [0; a_y_iso; 0];
 v_sae = T * v_iso;
