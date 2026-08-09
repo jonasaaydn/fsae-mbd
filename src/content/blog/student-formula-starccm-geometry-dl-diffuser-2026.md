@@ -123,7 +123,7 @@ result = subprocess.run(
 )
 print(result.stdout)
 
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # Training: epoch 200/200 | loss=0.0312 | val_loss=0.0418
 # Cl RMSE: 2.8%  Cd RMSE: 3.1%  圧力場 L2誤差: 4.2%
 

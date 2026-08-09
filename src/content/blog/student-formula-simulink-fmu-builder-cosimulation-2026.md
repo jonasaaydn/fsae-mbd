@@ -53,7 +53,7 @@ Simulink.FMU.export(fmu_options);
 fprintf('FMUエクスポート完了: fmu_output/engine_control.fmu\n');
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 ### Starting build procedure for model: engine_control
 ### Successful completion of build procedure for model: engine_control
@@ -91,7 +91,7 @@ print(f"最終噴射パルス幅: {result['fuel_injection_ms'][-1]:.3f} ms")
 print(f"最終点火進角: {result['ignition_angle_deg'][-1]:.1f} degBTDC")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 FMU名: engine_control
 入力変数: ['throttle_pos', 'engine_speed_rpm', 'map_kpa', 'coolant_temp_c']

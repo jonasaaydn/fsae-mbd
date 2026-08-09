@@ -61,7 +61,7 @@ print(f"DoEパラメータ生成完了: {len(doe_df)} ケース")
 print(doe_df.head(3).to_string())
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 DoEパラメータ生成完了: 100 ケース
@@ -170,7 +170,7 @@ np.savez("normalization_params.npz",
 print("エクスポート完了: brake_surrogate.onnx / normalization_params.npz")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 Epoch    0: MSELoss=0.987234

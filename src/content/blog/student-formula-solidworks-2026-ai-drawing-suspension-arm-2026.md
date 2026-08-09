@@ -120,7 +120,7 @@ print(f"自動配置された寸法数: {drawing.GetAnnotationCount()}個")
 print(f"検出された溶接箇所数: {drawing.GetWeldAnnotationCount()}箇所")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 SOLIDWORKS 2026.0.0.0001 を起動しました
 モデル読み込み完了: front_upper_a_arm.SLDPRT

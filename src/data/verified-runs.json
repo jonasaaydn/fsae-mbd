@@ -1,0 +1,9 @@
+[
+  {
+    "slug": "student-formula-cfd-ai-surrogate-2026",
+    "verified_on": "2026-08-09",
+    "run_env": "python 3.12.10 / numpy 2.4.6 / scikit-learn 1.9.0 / scipy 1.17.1",
+    "elapsed_sec": 2.9,
+    "note": "np.random.seed(42) で固定。2回実行して同一出力を確認。学習5ケース→1万通り評価。"
+  }
+]

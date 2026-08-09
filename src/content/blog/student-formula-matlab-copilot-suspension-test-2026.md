@@ -104,7 +104,7 @@ save('suspension_sil_baseline.mat', 'results');
 set_param(modelName, 'SimulationMode', 'normal');  % モードを通常に戻す
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 テスト1 [  0.0 mm,   0.0 km/h] →  0.000 A ... PASS

@@ -165,7 +165,7 @@ function stop = convergenceLogger(~, optimValues, state)
 end
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 Iteration  Func-count       f(x)     Step-size

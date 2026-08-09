@@ -63,7 +63,7 @@ print(f"DoEケース数: {len(df_doe)}")
 print(df_doe.head(5).to_string(index=False))
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 DoEケース数: 50
@@ -119,7 +119,7 @@ feasible = df_full[df_full['sigma_max_MPa'] * 2.0 <= 503]
 print(f"制約を満たすケース: {len(feasible)}/{len(df_full)}")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
        sigma_max_MPa  mass_kg
@@ -174,7 +174,7 @@ print(f"安全率 = {safety_factor:.2f} （要件: ≥ 2.0）")
 print("設計OK" if safety_factor >= 2.0 else "要改善（強度不足）")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 予測 σ_max = 187.3 MPa,  質量 = 0.412 kg
@@ -223,7 +223,7 @@ print(f"最大応力:   {pred_best['sigma_max_MPa']:.1f} MPa（安全率 {YIELD_
 print(f"最適形状:   t={best['t_wall_mm']:.2f}mm, r={best['r_fillet_mm']:.2f}mm, h={best['h_rib_mm']:.2f}mm")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 === 最適化結果 ===

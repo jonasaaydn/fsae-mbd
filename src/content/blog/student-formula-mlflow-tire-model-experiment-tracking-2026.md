@@ -143,7 +143,7 @@ for hidden_layers in hidden_layer_configs:
             print(f"hidden={hidden_layers}, lr={lr} → R²={r2:.4f}, MAE={mae:.1f}N")
 ```
 
-**このコードを実行すると以下が出力されます：**
+**このコードを出力の形式は次のようになります（未実測）：**
 
 ```
 hidden=(64, 64), lr=0.001 → R²=0.9721, MAE=42.3N

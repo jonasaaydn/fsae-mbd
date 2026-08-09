@@ -185,8 +185,7 @@ def island_evolution(X, y, n_islands=3, pop_size=5, n_generations=10):
     return best_pipeline, best_score
 ```
 
-### 実行例
-
+### 出力の形式（未実測）
 ```python
 # サンプルデータ（実際はCFD結果のジオメトリ特徴量→Cd値）
 np.random.seed(42)

@@ -142,7 +142,7 @@ plt.savefig("fsae_testrun_report.png", dpi=150)
 print("\n解析グラフ出力: fsae_testrun_report.png")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 取得データ: 66,000 行 / 66.0 秒
 最高速度: 98.3 km/h

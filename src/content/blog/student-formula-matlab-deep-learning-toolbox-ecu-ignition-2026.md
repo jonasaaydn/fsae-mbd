@@ -80,7 +80,7 @@ torch.onnx.export(
 print("エクスポート完了: ignition_mlp.onnx")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 学習完了 — 最終Loss: 0.0312
 エクスポート完了: ignition_mlp.onnx
@@ -107,7 +107,7 @@ codegen IgnitionMLP -config cfg -args {zeros(1,4,'single')}
 % → codegen/lib/IgnitionMLP/ にCソースとヘッダが生成される
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 予測点火進角: 27.83 degBTDC
 Code generation successful.

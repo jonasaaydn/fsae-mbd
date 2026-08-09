@@ -119,7 +119,7 @@ def suggest_next_setup(train_X: torch.Tensor, train_Y: torch.Tensor,
     return setup_dict
 ```
 
-上のコードを実行すると、以下のような出力が得られます：
+上のコードを出力の形式は次のようになります（未実測）：
 ```
 次回推奨セットアップ:
   front_spring_rate:   38.2 N/mm

@@ -170,7 +170,7 @@ if __name__ == "__main__":
     print(result["recommendation"])
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 TelemetryAgent: session_log.csv を読み込みました（50チャンネル / 32,400サンプル）

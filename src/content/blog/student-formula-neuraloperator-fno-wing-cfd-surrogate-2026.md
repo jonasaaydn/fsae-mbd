@@ -98,7 +98,7 @@ for epoch in range(200):
 torch.save(model.state_dict(), "fno_wing.pt")  # モデルを保存
 
 # === ステップ3: 新規形状を推論する ===
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # epoch   0 | loss 0.8421
 # epoch  50 | loss 0.0234
 # epoch 100 | loss 0.0089

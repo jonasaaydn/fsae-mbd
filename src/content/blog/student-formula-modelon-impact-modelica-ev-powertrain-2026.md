@@ -90,7 +90,7 @@ for var in model_description.modelVariables:
     if var.causality in ['input', 'output']:
         print(f"{var.causality:8s} | {var.name:50s} | {var.unit or '—'}")
 
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # input    | battery.current                                   | A
 # input    | motor.torque                                      | N.m
 # input    | coolant.pumpFlow                                  | kg/s

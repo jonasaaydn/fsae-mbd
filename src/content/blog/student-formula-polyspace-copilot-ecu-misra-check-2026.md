@@ -111,7 +111,7 @@ for level, count in results.items():
     print(f"  {level}: {count}件")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 [Critical] MISRA-C:2012 Rule 9.1: fuel_mapの未初期化変数読み出し

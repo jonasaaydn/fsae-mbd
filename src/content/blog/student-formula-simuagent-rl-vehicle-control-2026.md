@@ -87,7 +87,7 @@ plt.tight_layout()
 plt.savefig('learning_curve.png', dpi=150)
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 生成された状態変数: ['yaw_rate', 'slip_angle', 'steering_angle', 'velocity']

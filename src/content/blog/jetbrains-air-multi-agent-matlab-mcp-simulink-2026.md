@@ -115,7 +115,7 @@ git merge feature/test-expansion
 git merge feature/doc-update
 ```
 
-**実行すると以下のような出力が得られます：**
+**出力の形式は次のようになります（未実測）：**
 
 ```
 [Air] Task 1 (Claude Agent): Opened lateral_control.slx via MATLAB MCP

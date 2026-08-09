@@ -168,7 +168,7 @@ jobs:
           select-by-folder: tests/
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 Running TractionControlSILTest

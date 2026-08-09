@@ -96,7 +96,7 @@ result = subprocess.run(
     capture_output=True, text=True, timeout=120
 )
 
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # [SimuGen v1.2.0] Parsing prompt...        done
 # [SimuGen] Generating MATLAB script...     done (47 blocks, 38 connections)
 # [SimuGen] Executing in MATLAB...          done
@@ -122,7 +122,7 @@ simIn = setVariable(simIn, 'battery_soc_pct',     72.0);  % SOC 72%
 
 simOut = sim(simIn);
 
-% このコードを実行すると以下が出力されます：
+% このコードを出力の形式は次のようになります（未実測）：
 fprintf('回生トルク:   %.1f Nm\n', simOut.regen_torque_cmd_Nm.Data(end));
 % >> 回生トルク:   45.5 Nm
 fprintf('油圧圧力:     %.1f bar\n', simOut.hydraulic_pressure_bar.Data(end));

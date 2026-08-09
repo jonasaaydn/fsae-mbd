@@ -107,7 +107,7 @@ legacy_code("compile", sfcn);
 fprintf("Simulinkブロック sf_tire_fy_net 生成完了\n");
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 モデルをtire_fy_net.pt2に保存しました

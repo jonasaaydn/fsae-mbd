@@ -124,7 +124,7 @@ print(f"補正量の平均: {delta_nut.mean():.4f}, 最大: {delta_nut.max():.4f
 print(f"補正が効いているセル数: {(delta_nut > 0.01).sum()} / {len(delta_nut)}")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 補正nut場を書き出しました: 0/nut_ml_corrected
 補正量の平均: 0.0823, 最大: 1.4127

@@ -160,7 +160,7 @@ plt.savefig("pareto_front_suspension.png", dpi=150)
 print("グラフを pareto_front_suspension.png に保存しました")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 現行設計 — キャンバー変化量: 2.10 deg/50mm, バンプステア: 0.450 deg/50mm

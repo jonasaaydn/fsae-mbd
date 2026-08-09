@@ -154,7 +154,7 @@ print(f"  コーナリング SF: {safety_factor_cornering[optimal_idx]:.2f}")
 print(f"  制動        SF: {safety_factor_braking[optimal_idx]:.2f}")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 SF≥1.5を満たす最小外径: 19 mm

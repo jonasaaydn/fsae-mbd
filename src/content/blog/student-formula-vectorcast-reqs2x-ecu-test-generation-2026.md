@@ -77,7 +77,7 @@ void test_rev_limiter_over_limit(void) {
 }
 ```
 
-このコードを実行すると以下が出力されます:
+このコードを出力の形式は次のようになります（未実測）:
 
 ```
 [Reqs2x] Slicing: REQ_ENG_012 → engine_rev_limiter() [6 lines selected / 41 lines total]

@@ -141,7 +141,7 @@ for i, case in enumerate(response.recommended_cases, 1):
     print(f"ケース{i}: {json.dumps(case, ensure_ascii=False, indent=2)}")
 ```
 
-**実行すると以下が出力されます（出力例）：**
+**出力の形式は次のようになります（未実測）（出力例）：**
 
 ```
 === AIエージェントの分析結果 ===
@@ -293,7 +293,7 @@ for name, data in history["designs"]:
     print(f"  {data['date']}: {name} — {data['description']} ({data['engineer']})")
 ```
 
-**実行すると以下が出力されます：**
+**出力の形式は次のようになります（未実測）：**
 
 ```
 === 空力効率最高の設計データ ===

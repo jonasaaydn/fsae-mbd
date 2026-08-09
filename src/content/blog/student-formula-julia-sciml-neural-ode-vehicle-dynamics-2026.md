@@ -144,7 +144,7 @@ end
 println("学習完了。NNパラメータを vehicle_dynamics_nn.bson に保存します")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 Epoch  50 | Loss: 0.8421
 Epoch 100 | Loss: 0.2134

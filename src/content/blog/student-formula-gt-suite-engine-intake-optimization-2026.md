@@ -93,7 +93,7 @@ for i, (length, diam, restrictor) in enumerate(samples):
     })
     print(f"Case {i+1:2d}/25 完了: L={length:.0f}mm D={diam:.1f}mm → Tpeak={peak_torque:.1f}Nm")
 
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # Case  1/25 完了: L=312mm D=33.4mm → Tpeak=38.4Nm
 # Case  2/25 完了: L=445mm D=29.1mm → Tpeak=35.2Nm
 # ...（25ケース分）
@@ -130,7 +130,7 @@ print(f"最適吸気管径:         {opt.x[1]:.1f} mm")
 print(f"最適リストリクター径: {opt.x[2]:.2f} mm")
 print(f"予測ピークトルク:     {-opt.fun:.1f} Nm")
 
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # 最適吸気管長:         387.3 mm
 # 最適吸気管径:         34.2 mm
 # 最適リストリクター径: 19.87 mm

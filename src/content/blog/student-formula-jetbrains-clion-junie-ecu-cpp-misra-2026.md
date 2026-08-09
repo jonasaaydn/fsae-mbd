@@ -200,7 +200,7 @@ TEST(ThrottleOutput, AboveThreshold_ReducesThrottle) {
 }
 ```
 
-このコードをビルド・テスト実行すると以下が出力されます：
+このコードをビルド・テスト出力の形式は次のようになります（未実測）：
 
 ```
 [==========] Running 5 tests from 2 test suites.

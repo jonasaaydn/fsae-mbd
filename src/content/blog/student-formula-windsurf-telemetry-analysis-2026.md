@@ -139,7 +139,7 @@ exportgraphics(fig, 'figures/telemetry_summary.png', 'Resolution', 150);
 fprintf('グラフ保存: figures/telemetry_summary.png\n');
 ```
 
-このコードを実行すると以下が出力されます。
+このコードを出力の形式は次のようになります（未実測）。
 
 ```
 読み込み完了: 18432 サンプル, 24 チャンネル

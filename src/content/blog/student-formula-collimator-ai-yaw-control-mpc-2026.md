@@ -135,7 +135,7 @@ for t_idx in range(len(time)):
 print(f"最大横滑り角: {max(abs(np.array(beta_log))):.2f} deg")
 print(f"ヨーレート追従誤差(RMS): {np.sqrt(np.mean((np.array(yaw_rate_log))**2)):.4f} rad/s")
 
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # 最大横滑り角: 1.23 deg
 # ヨーレート追従誤差(RMS): 0.0312 rad/s
 ```

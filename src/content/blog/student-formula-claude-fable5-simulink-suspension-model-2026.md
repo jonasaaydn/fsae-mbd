@@ -139,7 +139,7 @@ disp('完了: dw_suspension_kinematics.slx が生成されました');
 disp(['静止時キャンバー: ', num2str(camber0_rad * 180/pi, '%.1f'), ' deg']);
 ```
 
-このスクリプトを実行すると以下が出力されます：
+このスクリプトを出力の形式は次のようになります（未実測）：
 
 ```
 完了: dw_suspension_kinematics.slx が生成されました

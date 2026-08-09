@@ -105,7 +105,7 @@ max_disp = np.max(np.linalg.norm(pred_displacement, axis=1))
 print(f"最大変形量: {max_disp:.3f} mm")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 Epoch 0: Loss=0.0842

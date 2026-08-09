@@ -224,8 +224,7 @@ if __name__ == "__main__":
     print(f"生成完了: {result}")
 ```
 
-### 実行結果
-
+### 出力の形式（未実測）
 ```
 [PhyNiKCE] 抽出パラメータ: {
   "Re": 500000, 
@@ -483,8 +482,7 @@ with open("./formula_cfd/0/U", "w") as f:
 print("\n📁 formula_cfd/0/U を生成しました。OpenFOAM で blockMesh → simpleFoam を実行してください。")
 ```
 
-#### 実行結果
-
+#### 出力の形式（未実測）
 ```
 レイノルズ数 Re = 4.00e+05
 選択された乱流モデル: kOmegaSST

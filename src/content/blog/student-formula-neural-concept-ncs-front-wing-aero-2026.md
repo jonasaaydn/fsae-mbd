@@ -72,7 +72,7 @@ model_id = trainer.train(
     epochs=200,                     # 50ケースなら200エポックで収束
 )
 print(f"トレーニング完了: model_id={model_id}")
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # Uploading 50 cases to Neural Concept Cloud...
 # Training epoch 200/200 — val_loss=0.0031
 # トレーニング完了: model_id=nc_fsae_20260619_ab3c
@@ -99,7 +99,7 @@ for fa in flap_angles:
                 "L_D": pred.Cl / abs(pred.Cd)      # 揚抗比（最大化が目標）
             })
 
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # Scanning 500 variants... done in 347 seconds (0.69 s/case average)
 # Best L/D=4.82 at flap_angle=21.1°, chord_ratio=0.38, ep_height=95mm
 # Pareto front: 27 non-dominated solutions found

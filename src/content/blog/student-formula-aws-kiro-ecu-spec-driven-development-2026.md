@@ -134,7 +134,7 @@ private:
 ```
 
 ```
-# このコードを実行すると以下が出力されます（ファイル保存時）：
+# このコードを出力の形式は次のようになります（未実測）（ファイル保存時）：
 # [MISRA] Checking FuelInjection.cpp...
 # FuelInjection.cpp:42: style: MISRA C++ Rule 6.2.1 — use of 'auto' without explicit type [misra-cpp-6.2.1]
 # → Kiroが自動でインライン提案を表示し、ワンクリックで修正できる

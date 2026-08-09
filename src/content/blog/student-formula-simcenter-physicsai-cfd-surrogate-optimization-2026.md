@@ -66,7 +66,7 @@ print(f"生成ケース数: {len(df_doe)}")
 print(df_doe.head(3).to_string(index=False))
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 生成ケース数: 30
@@ -116,7 +116,7 @@ print(f"予測 Cl={cl:.4f}, Cd={cd:.4f}, Cl/Cd={cl/cd:.2f}")
 print(f"推論時間: {result['inference_time_ms']:.1f} ms")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 予測 Cl=-1.2341, Cd=0.0487, Cl/Cd=25.34
@@ -154,7 +154,7 @@ print(f"最適パラメータ: aoa={study.best_params['aoa_deg']:.2f}°, "
       f"endplate={study.best_params['endplate_deg']:.2f}°")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 最適 Cl/Cd: 27.83

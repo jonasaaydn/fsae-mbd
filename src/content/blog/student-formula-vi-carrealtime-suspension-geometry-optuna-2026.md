@@ -117,7 +117,7 @@ study = optuna.create_study(
 )
 study.optimize(objective, n_trials=100, n_jobs=4, show_progress_bar=True)
 
-# このコードを実行すると以下が出力されます：
+# このコードを出力の形式は次のようになります（未実測）：
 # 100%|████████████████| 100/100 [00:38<00:00,  2.6 trials/s]
 print(f"最良キャンバー変化: {study.best_value:.3f}°")
 # >> 最良キャンバー変化: 0.392°

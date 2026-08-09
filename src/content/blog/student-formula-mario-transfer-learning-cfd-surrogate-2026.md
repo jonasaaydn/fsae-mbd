@@ -86,7 +86,7 @@ for case_dir in sorted(data_dir.glob("aoa*/latest/")):
 print(f"データ変換完了: {len(dataset)} ケース")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 データ変換完了: 22 ケース

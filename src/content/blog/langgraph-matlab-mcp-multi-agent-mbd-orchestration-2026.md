@@ -94,7 +94,7 @@ asyncio.run(run_single_agent(
 ))
 ```
 
-**実行すると以下のような出力が得られます：**
+**出力の形式は次のようになります（未実測）：**
 ```
 エージェントがMATLABコードを実行中...
 [Tool: create_simulink_model] 2質点モデルを作成しました: /tmp/two_mass_system.slx

@@ -65,7 +65,7 @@ df.to_csv("sidepod_aero_study.csv", index=False)
 print(f"最小Cd: {df['Cd'].min():.4f} ({df.loc[df['Cd'].idxmin(), 'variant']})")
 ```
 
-このコードを実行すると以下が出力されます:
+このコードを出力の形式は次のようになります（未実測）:
 
 ```
 sidepod_01: Cd=0.3421, Cl=-0.0512

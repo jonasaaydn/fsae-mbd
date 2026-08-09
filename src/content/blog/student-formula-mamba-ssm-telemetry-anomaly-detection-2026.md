@@ -132,7 +132,7 @@ print(f"異常区間: {(np.array(anomaly_scores) > threshold).sum()} サンプ�
 print("グラフを anomaly_report.png に保存しました")
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 
 ```
 訓練完了

@@ -55,7 +55,7 @@ print(f"接続成功: {mechanical.project_directory}")
 # 接続成功: C:\Users\fsae_team\AppData\Local\Temp\Mech_20260620_001\
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 接続成功: C:\Users\fsae_team\AppData\Local\Temp\Mech_20260620_001\
 ```
@@ -139,7 +139,7 @@ print("\n=== 最適案トップ3（SF≥1.5・最軽量順）===")
 print(optimal.to_string(index=False))
 ```
 
-このコードを実行すると以下が出力されます：
+このコードを出力の形式は次のようになります（未実測）：
 ```
 OD=25mm WT=1.5mm → σmax=  621MPa SF=0.81 m=0.042kg  ← 安全率不足
 OD=25mm WT=2.0mm → σmax=  486MPa SF=1.03 m=0.055kg  ← 安全率不足

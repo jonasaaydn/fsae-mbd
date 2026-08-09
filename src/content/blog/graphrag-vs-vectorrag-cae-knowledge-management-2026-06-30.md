@@ -83,7 +83,7 @@ python -m graphrag init --root .
 python -m graphrag index --root .
 ```
 
-実行すると以下が出力されます：
+出力の形式は次のようになります（未実測）：
 
 ```
 [Entity Extraction] Entities found: 19
