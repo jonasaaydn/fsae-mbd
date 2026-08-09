@@ -1,0 +1,11 @@
+---
+import CoordinateSystem from './CoordinateSystem.astro';
+---
+<div class="pair">
+  <CoordinateSystem number="1-1" convention="ISO" />
+  <CoordinateSystem number="1-2" convention="SAE" />
+</div>
+<style>
+  .pair { display: grid; gap: 1rem; }
+  @media (min-width: 720px) { .pair { grid-template-columns: 1fr 1fr; } }
+</style>
