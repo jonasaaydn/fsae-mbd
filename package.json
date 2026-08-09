@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build && npx pagefind --site dist",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "ladder:report": "node scripts/ladder-report.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
