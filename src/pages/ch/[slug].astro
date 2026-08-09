@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getSortedChapters, getPrereqChapters, getNextChapters, getPart } from '../../utils/chapters';
+
+export async function getStaticPaths() {
+  const chapters = await getSortedChapters();
+  return chapters.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+const base = import.meta.env.BASE_URL;
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const d = entry.data;
+const part = getPart(d.part);
+const prereqs = await getPrereqChapters(entry);
+const nexts = await getNextChapters(entry);
+const isPublished = d.status === 'published';
+---
+
+<BaseLayout
+  title={`第${d.chapter}章 ${d.title}`}
+  description={d.summary}
+  ogType="article"
+  canonicalPath={`/ch/${entry.slug}/`}
+>
+  <article class="ch container">
+    <header class="ch-head">
+      <p class="ch-part">第{part.roman}部　{part.title}</p>
+      <h1><span class="ch-no">第{d.chapter}章</span>{d.title}</h1>
+      <p class="ch-summary">{d.summary}</p>
+    </header>
+
+    {!isPublished && (
+      <p class="ch-notice">この章はまだ執筆中です。目次で全体像を確認できます。</p>
+    )}
+
+    <section class="needs">
+      <h2 class="needs-title">この章に必要なもの</h2>
+      <dl class="needs-dl">
+        <dt>ソフトウェア</dt>
+        <dd>{d.software.length ? d.software.join(' / ') : '不要'}</dd>
+        <dt>Toolbox</dt>
+        <dd>{d.toolbox.length ? d.toolbox.join(' / ') : '不要'}</dd>
+        <dt>前提の数学</dt>
+        <dd>{d.math.length ? d.math.join(' / ') : '特になし'}</dd>
+        <dt>前提の章</dt>
+        <dd>
+          {prereqs.length === 0 ? 'なし' : prereqs.map((p) => (
+            p.data.status === 'published'
+              ? <a href={`${base}ch/${p.slug}/`}>第{p.data.chapter}章 {p.data.title}</a>
+              : <span class="pending">第{p.data.chapter}章 {p.data.title}（準備中）</span>
+          ))}
+        </dd>
+      </dl>
+    </section>
+
+    {isPublished && (
+      <div class="ch-body prose" data-pagefind-body>
+        <Content />
+      </div>
+    )}
+
+    {d.verified_on && (
+      <p class="verified">
+        このコードは {d.verified_on} に実行して出力を確認しています（{d.verified_env}）。
+      </p>
+    )}
+
+    {nexts.length > 0 && (
+      <nav class="next">
+        <h2 class="next-title">次に読む</h2>
+        <ul>
+          {nexts.map((n) => (
+            <li>
+              {n.data.status === 'published'
+                ? <a href={`${base}ch/${n.slug}/`}>第{n.data.chapter}章 {n.data.title}</a>
+                : <span class="pending">第{n.data.chapter}章 {n.data.title}（準備中）</span>}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    <a href={`${base}curriculum/`} class="back">← 目次に戻る</a>
+  </article>
+</BaseLayout>
+
+<style>
+  .ch { max-width: 780px; padding-top: 3rem; padding-bottom: 4rem; }
+  .ch-part { font-size: 0.78rem; letter-spacing: 0.06em; color: var(--color-accent); margin: 0 0 0.5rem; }
+  .ch-head h1 { font-size: 1.9rem; line-height: 1.35; color: var(--color-navy); margin: 0 0 0.75rem; }
+  .ch-no { display: block; font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 0.3rem; }
+  .ch-summary { color: var(--color-text-muted); line-height: 1.8; margin: 0 0 1.75rem; }
+  .ch-notice {
+    background: #fffbeb; border: 1px solid #fed7aa; border-radius: var(--radius-md);
+    padding: 0.8rem 1rem; font-size: 0.9rem; color: #92400e;
+  }
+  .needs {
+    border: 1px solid var(--color-border); border-radius: var(--radius-lg);
+    padding: 1.1rem 1.3rem; margin-bottom: 2rem; background: var(--color-bg-subtle, #f8fafc);
+  }
+  .needs-title { font-size: 0.95rem; color: var(--color-navy); margin: 0 0 0.7rem; }
+  .needs-dl { display: grid; grid-template-columns: 8rem 1fr; gap: 0.4rem 1rem; margin: 0; font-size: 0.88rem; }
+  .needs-dl dt { color: var(--color-text-muted); }
+  .needs-dl dd { margin: 0; }
+  .needs-dl dd a { display: block; }
+  .pending { color: var(--color-text-muted); }
+  .verified {
+    font-size: 0.82rem; color: var(--color-text-muted);
+    border-left: 3px solid var(--color-accent); padding-left: 0.8rem; margin-top: 2rem;
+  }
+  .next { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
+  .next-title { font-size: 1rem; color: var(--color-navy); margin: 0 0 0.6rem; }
+  .next ul { list-style: none; padding: 0; margin: 0; line-height: 2; }
+  .back { display: inline-block; margin-top: 2.5rem; font-size: 0.88rem; }
+  @media (max-width: 560px) {
+    .needs-dl { grid-template-columns: 1fr; gap: 0.15rem; }
+    .needs-dl dt { margin-top: 0.5rem; font-size: 0.78rem; }
+  }
+</style>
