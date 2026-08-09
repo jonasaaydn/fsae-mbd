@@ -14,5 +14,9 @@
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.4.1",
     "astro": "^4.16.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.3"
   }
 }
