@@ -1,0 +1,86 @@
+---
+import FigureFrame from './FigureFrame.astro';
+
+interface Props {
+  number?: string;
+}
+const { number = '3-1' } = Astro.props;
+
+const caption =
+  '線形2輪モデルの模式図（上から見た図。ISO 8855：画面右が +x／車両前方、画面上が +y／車両左）。' +
+  '前軸・後軸それぞれの左右輪を1本ずつにまとめ、重心（CG）を通る中心線の上に置く（l_f・l_r は重心からの距離）。' +
+  '重心の速度ベクトル V は中心線から車体すべり角 β だけ傾き、車体は角速度 r（ヨーレート）で回転する。' +
+  '前輪は中心線から舵角 δ だけ切れており、前後軸それぞれの接地点における速度ベクトル（青、中心線または前輪の向きから' +
+  'スリップ角 α_f・α_r だけ傾く）と、その傾きを打ち消す向きに生じる横力 F_yf・F_yr（赤）を示す。';
+---
+
+<FigureFrame number={number} caption={caption} viewBox="0 0 660 460">
+  <!-- 進行方向の注記 -->
+  <line class="geo" x1="36" y1="36" x2="112" y2="36" marker-end="url(#arrow-geo)" />
+  <text class="lbl-sub" x="36" y="54">+x（車両前方）</text>
+
+  <!-- 車両中心線（後軸〜前軸）と、delta・alpha_f の角度基準となるダッシュ延長線 -->
+  <line class="geo" x1="150" y1="248" x2="460" y2="248" />
+  <line class="guide" x1="460" y1="248" x2="515" y2="248" />
+
+  <!-- 前輪（舵角 delta だけ回転したタイヤの簡略表現） -->
+  <line class="geo" x1="450.5" y1="232.7" x2="469.5" y2="263.3" style="stroke-width:4" />
+  <text class="lbl-sub" x="482" y="284">前輪（舵角 δ）</text>
+
+  <!-- 後輪（舵角なし。中心線と同じ向き） -->
+  <line class="geo" x1="150" y1="230" x2="150" y2="266" style="stroke-width:4" />
+  <text class="lbl-sub" x="60" y="222">後輪（舵角なし）</text>
+
+  <!-- 前軸接地点の速度ベクトル（中心線から alpha_f + delta = 前軸の速度角、だけ傾く。ラベルはキャプションに譲る） -->
+  <line class="vel" x1="460" y1="248" x2="564.0" y2="233.4" marker-end="url(#arrow-vel)" />
+
+  <!-- 後軸接地点の速度ベクトル（ラベルはキャプションに譲る） -->
+  <line class="vel" x1="150" y1="248" x2="254.4" y2="259.0" marker-end="url(#arrow-vel)" />
+
+  <!-- 重心の速度ベクトル V（中心線から beta だけ傾く） -->
+  <line class="vel" x1="300" y1="248" x2="413.3" y2="228.0" marker-end="url(#arrow-vel)" />
+  <text class="sym lbl-vel" x="418" y="222">V</text>
+
+  <!-- 前軸の横力 F_yf（前輪の向きにほぼ垂直） -->
+  <line class="force" x1="460" y1="248" x2="421.9" y2="186.9" marker-end="url(#arrow-force)" />
+  <text class="sym lbl-force" x="386" y="176">F<tspan baseline-shift="sub" font-size="0.7em">yf</tspan></text>
+
+  <!-- 後軸の横力 F_yr（後輪の向きに垂直） -->
+  <line class="force" x1="150" y1="248" x2="150" y2="176.0" marker-end="url(#arrow-force)" />
+  <text class="sym lbl-force" x="128" y="168">F<tspan baseline-shift="sub" font-size="0.7em">yr</tspan></text>
+
+  <!-- 角度: delta（中心線の延長 -> 前輪の向き、0〜32度）。弧は軸のすぐそばに小さく描き、
+       ラベルは弧・前軸接地点の速度ベクトルのどちらとも重ならない中心線の下の余白に置く -->
+  <path class="guide" d="M 480.0,248 A 20 20 0 0 1 476.1,237.4" />
+  <text class="sym" x="497" y="256">δ</text>
+
+  <!-- 角度: alpha_f（前輪の向き32度 -> 前軸接地点の速度8度）。delta弧より外側の大きな半径にして重ならないようにし、
+       ラベルは速度ベクトルより上側（弧の外側）の余白に置く -->
+  <path class="guide" d="M 505.6,241.6 A 46 46 0 0 1 499.0,223.6" />
+  <text class="sym" x="522" y="220">α<tspan baseline-shift="sub" font-size="0.7em">f</tspan></text>
+
+  <!-- 角度: beta（中心線 -> 重心の速度 V） -->
+  <path class="guide" d="M 338,248 A 38 38 0 0 1 337.4,241.4" />
+  <text class="sym" x="345" y="238">β</text>
+
+  <!-- 角度: alpha_r（中心線（後輪の向き） -> 後軸接地点の速度） -->
+  <path class="guide" d="M 187.8,252.0 A 38 38 0 0 1 188.0,248.0" />
+  <text class="sym" x="192" y="264">α<tspan baseline-shift="sub" font-size="0.7em">r</tspan></text>
+
+  <!-- ヨーレート r（重心まわりの回転を表す弧。矢印つき） -->
+  <path class="geo" d="M 285.0,222.0 A 30 30 0 0 1 270.3,243.8" marker-end="url(#arrow-geo)" />
+  <text class="sym" x="252" y="220">r</text>
+
+  <!-- 重心（原点） -->
+  <circle class="dot" cx="300" cy="248" r="4" />
+  <text class="lbl-sub" x="270" y="270">重心 CG</text>
+
+  <!-- 軸位置の寸法線: l_r（後軸〜重心）と l_f（重心〜前軸） -->
+  <line class="guide" x1="150" y1="280" x2="150" y2="320" />
+  <line class="guide" x1="300" y1="280" x2="300" y2="320" />
+  <line class="guide" x1="460" y1="280" x2="460" y2="320" />
+  <line class="geo" x1="150" y1="320" x2="300" y2="320" marker-start="url(#arrow-geo)" marker-end="url(#arrow-geo)" />
+  <line class="geo" x1="300" y1="320" x2="460" y2="320" marker-start="url(#arrow-geo)" marker-end="url(#arrow-geo)" />
+  <text class="sym" x="225" y="340" text-anchor="middle">l<tspan baseline-shift="sub" font-size="0.7em">r</tspan></text>
+  <text class="sym" x="380" y="340" text-anchor="middle">l<tspan baseline-shift="sub" font-size="0.7em">f</tspan></text>
+</FigureFrame>
