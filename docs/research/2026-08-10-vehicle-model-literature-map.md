@@ -24,7 +24,7 @@
 - 【要修正】項目53: Blundell & Harty 第2版の刊行年は 2015 → 2014（Elsevier公式・OpenLibrary が一致して2014年9月）。
 - 【要修正】項目41: 著者名 "I. Kshiro" は誤記。正しくは "I. Kushiro"（久代/櫛郎 = Ikuo Kushiro, トヨタ自動車）。データベースにも誤記が伝播しているので注意。
 - 【要注意・ページ数の裏取り失敗】項目33: Race Car Vehicle Dynamics を「922ページ」とする根拠が確認できなかった。図書館目録・OpenLibrary はいずれも890ページ。教科書に書くならページ数を省略するか890とすること。
-- 【要注意】項目65: FSAE TTC のデータ利用料金は今回確認できなかった。金額・費用条件を本文に書いてはならない（登録制であることのみ確認済み）。
+- 【訂正済 2026-08-10】項目65: FSAE TTC の費用は Calspan 公式ページで **500 USD** と確認済み（"Payment of $500 USD must accompany the registration form to be eligible for data download." https://calspan.com/automotive/fsae-ttc/ ）。当初「確認できなかった」としたが誤り。本文に金額を書いてよい（ただし変わりうる旨を添える）。
 - 【重複】項目25と50、44と73、45と81、46と82、47と89 はそれぞれ同一文献。参考文献リストでは統合が必要（実質の独立文献数は 89件 → 84件）。
 - 【文脈注意】項目58 Sharp (1976) "The Dynamics of Single Track Vehicles" は二輪車（オートバイ）の力学であり、車両運動の「単軌道モデル＝線形2輪モデル」とは別物。第3章の根拠として引くと誤読を招く。
 - 【文脈注意】項目51・78 は電動レースカーが対象。本書は内燃機関前提のため、手法のみ援用し駆動系モデルは流用しない旨の注記が必要。
@@ -649,7 +649,7 @@
 5. **Sinacori の 1977 年 NASA CR-152066**（モーション忠実度基準としてよく引用される）は未確認。Crossref で確認できたのは 1986 年版で年・報告書番号が異なる。引用前に現物確認（第46章）。
 6. **Reid & Nahon UTIAS Report No. 296 (1985)** は現物未確認。**第46章では DOI 確認済みの Nahon & Reid (1990) を正典として引く。**
 7. **MathWorks の FSAE 無償ライセンスに Embedded Coder / Simulink Real-Time / Simulink Desktop Real-Time / Sensor Fusion and Tracking Toolbox / Statistics and Machine Learning Toolbox が含まれるか**は年度・地域で変わりうる。**第41〜43章・第35章・第33章で「学生が実行できるか」を断定する前に、MathWorks の Student Competitions ページで当該年度の対象製品リストを確認する。**（確認済み：MATLAB、Simulink、Control System Toolbox、Model Predictive Control Toolbox、Optimization Toolbox、Vehicle Dynamics Blockset、Powertrain Blockset、Automated Driving Toolbox、Simscape 各種、Embedded Coder、MATLAB Coder、Deep Learning Toolbox、Computer Vision Toolbox、Lidar Toolbox が公式ページに記載）
-8. **FSAE TTC の加入費用**は本調査で公式サイト上の記載を確認できなかった。**金額を本書に書かない。**「チーム単位の登録が必要。費用は公式ページで確認のこと」と書く。
+8. **FSAE TTC の加入費用**は Calspan 公式ページで **500 USD** と確認済み（2026-08-10 再確認）。本文に金額を書いてよい。ただし変更されうるため「申し込み前に公式ページで確認」を添えること。
 9. **FSAE US 大会規則および学生フォーミュラ日本大会（JSAE）規則**は本調査で未確認。コース諸元・配点を本文に書く際は当該大会の当該年度規則を参照し直す。
 10. **CasADi 公式サイト**は本調査で直接開いての確認をしていない（第32章）。URL と API 記述を本文に載せる前に取得確認する。
 11. **SAE Technical Paper 各件**（730018、2000-01-3563、2002-01-0567、2016-36-0164、2019-01-0163、2026-01-0762 ほか）は Crossref で DOI の実在と書誌情報を確認したが**有料のため全文は未読**。内容を詳述する際は必ず全文を入手する。
