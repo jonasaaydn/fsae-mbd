@@ -1,0 +1,224 @@
+---
+import FigureFrame from './FigureFrame.astro';
+
+interface Props {
+  number?: string;
+}
+const { number = '5-1' } = Astro.props;
+
+// ===== この図の曲線は、本文のMATLABコードと同じ式・同じ仮パラメータ（第3〜5章共通）から
+// このAstroコンポーネントのビルド時にJavaScriptで再計算している（手描きではない）。=====
+
+const P = { m: 280, Iz: 115, lf: 0.79, lr: 0.76, Kf: 105000, Kr: 130000 };
+const l = P.lf + P.lr;
+const Asf = -P.m * (P.lf * P.Kf - P.lr * P.Kr) / (l ** 2 * P.Kf * P.Kr);
+
+function bicycleA(V: number): number[][] {
+  const A11 = -(P.Kf + P.Kr) / (P.m * V);
+  const A12 = -1 - (P.lf * P.Kf - P.lr * P.Kr) / (P.m * V * V);
+  const A21 = -(P.lf * P.Kf - P.lr * P.Kr) / P.Iz;
+  const A22 = -(P.lf ** 2 * P.Kf + P.lr ** 2 * P.Kr) / (P.Iz * V);
+  return [[A11, A12], [A21, A22]];
+}
+function bicycleB(V: number): number[] {
+  return [P.Kf / (P.m * V), P.lf * P.Kf / P.Iz];
+}
+function rhs(A: number[][], B: number[], x: number[], u: number): number[] {
+  return [A[0][0] * x[0] + A[0][1] * x[1] + B[0] * u, A[1][0] * x[0] + A[1][1] * x[1] + B[1] * u];
+}
+function rk4Step(A: number[][], B: number[], x: number[], u: number, dt: number): number[] {
+  const k1 = rhs(A, B, x, u);
+  const k2 = rhs(A, B, [x[0] + dt / 2 * k1[0], x[1] + dt / 2 * k1[1]], u);
+  const k3 = rhs(A, B, [x[0] + dt / 2 * k2[0], x[1] + dt / 2 * k2[1]], u);
+  const k4 = rhs(A, B, [x[0] + dt * k3[0], x[1] + dt * k3[1]], u);
+  return [
+    x[0] + dt / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0]),
+    x[1] + dt / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]),
+  ];
+}
+function stepResponse(V: number, deltaStep: number, dt: number, tEnd: number) {
+  const A = bicycleA(V), B = bicycleB(V);
+  const n = Math.round(tEnd / dt);
+  const t: number[] = [0], r: number[] = [0];
+  let x = [0, 0];
+  for (let i = 0; i < n; i++) {
+    x = rk4Step(A, B, x, deltaStep, dt);
+    t.push((i + 1) * dt);
+    r.push(x[1]);
+  }
+  return { t, r };
+}
+function stepMetrics(t: number[], y: number[], yss: number) {
+  const idx10 = t.findIndex((_, i) => y[i] >= 0.1 * yss);
+  const idx90 = t.findIndex((_, i) => y[i] >= 0.9 * yss);
+  let peakIdx = 0;
+  for (let i = 1; i < y.length; i++) if (y[i] > y[peakIdx]) peakIdx = i;
+  const band = 0.02 * Math.abs(yss);
+  let lastOutside = -1;
+  for (let i = 0; i < y.length; i++) if (Math.abs(y[i] - yss) > band) lastOutside = i;
+  return {
+    t10: t[idx10], t90: t[idx90],
+    tPeak: t[peakIdx], yPeak: y[peakIdx],
+    tSettle: lastOutside >= 0 ? t[lastOutside] : 0,
+  };
+}
+
+// ===== パネル1: ステップ操舵応答（V=15 m/s: 素直な例／V=35 m/s: zeta<1でオーバーシュートする例） =====
+const deltaStepDeg = 2.0;
+const deltaStep = deltaStepDeg * Math.PI / 180;
+const dt = 0.0005;
+const tEndPanel1 = 0.25;
+
+const V_A = 15, V_B = 35;
+const rssA = (V_A / l) / (1 + Asf * V_A ** 2);
+const rssB = (V_B / l) / (1 + Asf * V_B ** 2);
+const respA = stepResponse(V_A, deltaStep, dt, tEndPanel1);
+const respB = stepResponse(V_B, deltaStep, dt, tEndPanel1);
+const metB = stepMetrics(respB.t, respB.r, rssB * deltaStep);
+
+// 座標系（時間 -> x、正規化ヨーレート r/r_ss -> y）。
+// y軸は定常値(1.0)以上を拡大して表示している（軸の目盛りが不連続に切り替わる、公開のズーム）。
+const X_LEFT = 110, X_RIGHT = 650, T_MAX = 0.25;
+const xScaleT = (tSec: number) => X_LEFT + (tSec / T_MAX) * (X_RIGHT - X_LEFT);
+
+const Y_BASE = 430, Y_MID = 160, Y_ZTOP = 122;
+const ZOOM_DOMAIN = 0.03; // r/r_ss は 1.00〜1.03 をこの拡大域にマップする
+const yScaleR = (rNorm: number) => {
+  if (rNorm <= 1.0) return Y_BASE - rNorm * (Y_BASE - Y_MID);
+  const frac = Math.min(rNorm - 1.0, ZOOM_DOMAIN) / ZOOM_DOMAIN;
+  return Y_MID - frac * (Y_MID - Y_ZTOP);
+};
+
+function pathFor(resp: { t: number[]; r: number[] }, rss: number, step: number = 4): string {
+  const pts: string[] = [];
+  for (let i = 0; i < resp.t.length; i += step) {
+    const rNorm = resp.r[i] / (rss * deltaStep);
+    pts.push(`${xScaleT(resp.t[i]).toFixed(1)},${yScaleR(rNorm).toFixed(1)}`);
+  }
+  return 'M ' + pts.join(' L ');
+}
+const pathA = pathFor(respA, rssA);
+const pathB = pathFor(respB, rssB);
+
+const yA_10 = yScaleR(0.1), yA_90 = yScaleR(0.9); // 立ち上がり帯（共通の10-90%基準線）
+const xB_peak = xScaleT(metB.tPeak);
+const yB_peak = yScaleR(metB.yPeak / (rssB * deltaStep));
+const xB_settle = xScaleT(metB.tSettle);
+const y_plus2 = yScaleR(1.02);
+const y_minus2 = yScaleR(0.98);
+
+// ===== パネル2: omega_n・zeta の速度依存性（閉じた式、V=5〜40 m/s） =====
+const V_MIN = 5, V_MAX = 40;
+const xScaleV = (V: number) => X_LEFT + (V - V_MIN) / (V_MAX - V_MIN) * (X_RIGHT - X_LEFT);
+
+function omegaZeta(V: number) {
+  const omega2 = l ** 2 * P.Kf * P.Kr * (1 + Asf * V ** 2) / (P.m * P.Iz * V ** 2);
+  const twoZetaOmega = (P.m * (P.lf ** 2 * P.Kf + P.lr ** 2 * P.Kr) + P.Iz * (P.Kf + P.Kr)) / (P.m * P.Iz * V);
+  const omega = Math.sqrt(omega2);
+  return { omega, zeta: twoZetaOmega / (2 * omega) };
+}
+const C_ZETA = (P.Iz * (P.Kf + P.Kr) + P.m * (P.lf ** 2 * P.Kf + P.lr ** 2 * P.Kr)) / (2 * l * Math.sqrt(P.m * P.Iz * P.Kf * P.Kr));
+const V_CROSS = Math.sqrt((C_ZETA ** 2 - 1) / Asf); // zeta(V)=1 になる速度
+
+const Y2_BASE = 700, Y2_TOP = 490;
+const OMEGA_MAX = 210, ZETA_MIN = 0.85, ZETA_MAX = 1.05;
+const yScaleOmega = (w: number) => Y2_BASE - (w / OMEGA_MAX) * (Y2_BASE - Y2_TOP);
+const yScaleZeta = (z: number) => Y2_BASE - (z - ZETA_MIN) / (ZETA_MAX - ZETA_MIN) * (Y2_BASE - Y2_TOP);
+
+const nSweep = 70;
+const omegaPts: string[] = [];
+const zetaPts: string[] = [];
+for (let i = 0; i <= nSweep; i++) {
+  const V = V_MIN + (V_MAX - V_MIN) * (i / nSweep);
+  const { omega, zeta } = omegaZeta(V);
+  omegaPts.push(`${xScaleV(V).toFixed(1)},${yScaleOmega(omega).toFixed(1)}`);
+  zetaPts.push(`${xScaleV(V).toFixed(1)},${yScaleZeta(zeta).toFixed(1)}`);
+}
+const pathOmega = 'M ' + omegaPts.join(' L ');
+const pathZeta = 'M ' + zetaPts.join(' L ');
+const xVcross = xScaleV(V_CROSS);
+const yZeta1 = yScaleZeta(1.0);
+
+const caption =
+  `ステップ操舵応答（上段）と ω_n・ζ の速度依存性（下段）。いずれも本文のMATLABコードと同じ式・同じ仮パラメータ` +
+  `（第3〜5章共通、実測ではない）からこの図のために再計算した模式図であり、実測データではない。` +
+  `上段：δ=2°のステップ操舵に対するヨーレート応答 r(t) を、各速度自身の定常値 r_ss で正規化して重ねた` +
+  `（V=${V_A} m/s は破線、V=${V_B} m/s は実線）。縦軸は定常値1.0以上の領域を見やすさのため拡大している` +
+  `（軸の縮尺が1.0を境に切り替わる）。V=${V_B} m/s の立ち上がり時間・ピーク・整定時間（±2%帯、破線）を印で示す。` +
+  `下段：固有角振動数 ω_n（左軸）と減衰比 ζ（右軸）を閉じた式から計算し速度に対してプロットした。` +
+  `ζ=1（過減衰/過小減衰の境目）を横破線、その交差速度 V*≈${V_CROSS.toFixed(1)} m/s を縦破線で示す。`;
+---
+
+<FigureFrame number={number} caption={caption} viewBox="0 0 700 760">
+  <!-- ===== 上段: ステップ操舵応答 ===== -->
+
+  <!-- delta 入力のミニストリップ -->
+  <line class="geo" x1="90" y1="90" x2={X_LEFT} y2="90" />
+  <line class="geo" x1={X_LEFT} y1="90" x2={X_LEFT} y2="55" />
+  <line class="geo" x1={X_LEFT} y1="55" x2={X_RIGHT} y2="55" />
+  <text class="sym" x="60" y="94">δ</text>
+  <text class="lbl-sub" x={X_LEFT + 14} y="47">δ(t)：t=0でステップ入力</text>
+
+  <!-- 主プロットの軸 -->
+  <line class="geo" x1={X_LEFT} y1={Y_BASE} x2={X_LEFT} y2="110" marker-end="url(#arrow-geo)" />
+  <line class="geo" x1={X_LEFT} y1={Y_BASE} x2={X_RIGHT + 15} y2={Y_BASE} marker-end="url(#arrow-geo)" />
+  <text class="sym" x="55" y="168">r/r<tspan baseline-shift="sub" font-size="0.7em">ss</tspan></text>
+  <text class="sym" x={X_RIGHT + 10} y={Y_BASE + 6}>t</text>
+  <text class="lbl-sub" x={X_LEFT - 6} y={Y_BASE + 14} text-anchor="end">0</text>
+
+  <!-- 定常値ライン r/rss = 1.0 -->
+  <line class="guide" x1={X_LEFT} y1={Y_MID} x2={X_RIGHT} y2={Y_MID} />
+  <text class="lbl-sub" x={X_RIGHT + 8} y={Y_MID + 4}>r<tspan baseline-shift="sub" font-size="0.7em">ss</tspan></text>
+
+  <!-- +-2% 整定帯（V=35側の整定判定基準） -->
+  <line class="guide" x1={X_LEFT} y1={y_plus2} x2={X_RIGHT} y2={y_plus2} />
+  <line class="guide" x1={X_LEFT} y1={y_minus2} x2={X_RIGHT} y2={y_minus2} />
+  <text class="lbl-sub" x={X_RIGHT + 8} y={y_plus2 + 4}>+2%</text>
+
+  <!-- 応答曲線: V=15 m/s（破線, 素直）, V=35 m/s（実線, オーバーシュート有り） -->
+  <path class="guide" d={pathA} />
+  <path class="vel" d={pathB} />
+  <text class="lbl-sub" x="300" y={yScaleR(0.55) - 6}>V={V_A} m/s（zeta&gt;1寄り）</text>
+  <text class="lbl-vel sym" x="300" y={yScaleR(0.80) - 6}>V={V_B} m/s（zeta&lt;1）</text>
+
+  <!-- 立ち上がり時間 10-90%（共通の基準線）。ラベルは曲線と重ならないよう軸の外側（左）に置く -->
+  <line class="guide" x1={X_LEFT} y1={yA_10} x2={xB_peak} y2={yA_10} />
+  <line class="guide" x1={X_LEFT} y1={yA_90} x2={xB_peak} y2={yA_90} />
+  <text class="lbl-sub" x={X_LEFT - 6} y={yA_10 + 4} text-anchor="end">10%</text>
+  <text class="lbl-sub" x={X_LEFT - 6} y={yA_90 + 4} text-anchor="end">90%</text>
+
+  <!-- V=35のピーク -->
+  <circle class="dot" cx={xB_peak} cy={yB_peak} r="4" />
+  <line class="guide" x1={xB_peak} y1={yB_peak} x2={xB_peak} y2={Y_BASE} />
+  <text class="lbl-sub" x={xB_peak + 6} y={yB_peak - 4}>ピーク</text>
+
+  <!-- V=35の整定時間 -->
+  <line class="guide" x1={xB_settle} y1={Y_BASE} x2={xB_settle} y2={y_plus2} />
+  <text class="lbl-sub" x={xB_settle + 4} y={Y_BASE - 6}>整定</text>
+
+  <!-- ===== 下段: omega_n・zeta の速度依存性 ===== -->
+
+  <line class="geo" x1={X_LEFT} y1={Y2_BASE} x2={X_LEFT} y2={Y2_TOP - 10} marker-end="url(#arrow-geo)" />
+  <line class="geo" x1={X_LEFT} y1={Y2_BASE} x2={X_RIGHT + 15} y2={Y2_BASE} marker-end="url(#arrow-geo)" />
+  <text class="sym lbl-vel" x="40" y={Y2_TOP - 2}>&#969;<tspan baseline-shift="sub" font-size="0.7em">n</tspan></text>
+  <text class="sym lbl-force" x={X_RIGHT + 8} y={Y2_TOP - 2}>&#950;</text>
+  <text class="sym" x={X_RIGHT + 10} y={Y2_BASE + 6}>V</text>
+
+  <!-- zeta=1 の水平ガイドと、交差速度V*の垂直ガイド -->
+  <line class="guide" x1={X_LEFT} y1={yZeta1} x2={X_RIGHT} y2={yZeta1} />
+  <text class="lbl-sub" x={X_RIGHT + 8} y={yZeta1 + 4}>&#950;=1</text>
+  <line class="guide" x1={xVcross} y1={Y2_BASE} x2={xVcross} y2={Y2_TOP} />
+  <circle class="dot" cx={xVcross} cy={yZeta1} r="4" />
+  <text class="sym" x={xVcross} y={Y2_BASE + 34} text-anchor="middle">V*</text>
+
+  <path class="vel" d={pathOmega} />
+  <path class="force" d={pathZeta} />
+
+  <!-- V軸目盛り -->
+  {[5, 10, 15, 20, 25, 30, 35, 40].map((V) => (
+    <>
+      <line class="guide" x1={xScaleV(V)} y1={Y2_BASE} x2={xScaleV(V)} y2={Y2_BASE + 5} />
+      <text class="lbl-sub" x={xScaleV(V)} y={Y2_BASE + 18} text-anchor="middle">{V}</text>
+    </>
+  ))}
+</FigureFrame>
