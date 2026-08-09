@@ -665,8 +665,8 @@ const { convention = 'ISO', number } = Astro.props;
 
 // ISO 8855 は Z-up（y 左・z 上）、従来の SAE J670e は Z-down（y 右・z 下）
 const isISO = convention === 'ISO';
-const yLabel = isISO ? '右' : '左';
-const zText  = isISO ? 'z は下向き（紙面裏）' : 'z は上向き（紙面手前）';
+const yLabel = isISO ? '左' : '右';
+const zText  = isISO ? 'z は上向き（紙面手前）' : 'z は下向き（紙面裏）';
 const caption = isISO
   ? '車両座標系（ISO 8855）。x 前方・y 左・z 上向き（Z-up）。'
   : '車両座標系（従来の SAE J670e）。x 前方・y 右・z 下向き（Z-down）。ISO と y・z の向きが逆になる。';
@@ -683,9 +683,9 @@ const caption = isISO
   <text class="lbl-sub" x="448" y="171">前方</text>
 
   <!-- y 軸 -->
-  <line class="geo" x1="280" y1="150" x2="280" y2={isISO ? 250 : 50} marker-end="url(#arrow-geo)" />
-  <text class="sym" x="292" y={isISO ? 248 : 58}>y</text>
-  <text class="lbl-sub" x="292" y={isISO ? 264 : 74}>{yLabel}</text>
+  <line class="geo" x1="280" y1="150" x2="280" y2={isISO ? 50 : 250} marker-end="url(#arrow-geo)" />
+  <text class="sym" x="292" y={isISO ? 58 : 248}>y</text>
+  <text class="lbl-sub" x="292" y={isISO ? 74 : 264}>{yLabel}</text>
 
   <!-- 原点 -->
   <circle cx="280" cy="150" r="4" fill="#0f172a" />
