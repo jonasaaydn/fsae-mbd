@@ -11,7 +11,7 @@ interface Props {
   canonicalPath?: string;
   /** サイトルートからの画像パス（例: '/og-image.png'）。未指定ならブランド既定画像。 */
   ogImage?: string;
-  /** 構造化データ（JSON-LD）。記事ページでは BlogPosting / BreadcrumbList を渡す。 */
+  /** 構造化データ（JSON-LD）。章ページでは Article / BreadcrumbList を渡す。 */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -36,7 +36,6 @@ const siteLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: SITE.title,
-  alternateName: 'MBD AI Lab',
   url: `${siteOrigin}${base}/`,
   description: SITE.description,
   inLanguage: 'ja',
