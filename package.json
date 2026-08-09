@@ -10,6 +10,7 @@
     "ladder:report": "node scripts/ladder-report.mjs"
   },
   "dependencies": {
+    "@astrojs/mdx": "^3.1.2",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.4.1",
     "astro": "^4.16.0"
