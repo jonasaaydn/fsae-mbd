@@ -1471,7 +1471,7 @@ import CoordinateSystem from './CoordinateSystem.astro';
 
 T = diag([1, -1, -1]);   % ISO <-> SAE の変換行列（自分自身が逆行列）
 
-% 例: 右旋回中の横加速度と ヨーレート（ISO 表記）
+% 例: 左旋回中の横加速度とヨーレート（ISO表記）
 a_y_iso = 8.5;    % m/s^2  左向きが正（ISO 8855）
 r_iso   = 0.62;   % rad/s  上から見て反時計回りが正（z 上向きのため）
 
