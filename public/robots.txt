@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jonasaaydn.github.io/mbd-ai-lab/sitemap-index.xml
+Sitemap: https://jonasaaydn.github.io/fsae-mbd/sitemap-index.xml

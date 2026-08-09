@@ -4,7 +4,7 @@ import mdx from '@astrojs/mdx';
 
 export default defineConfig({
   site: 'https://jonasaaydn.github.io',
-  base: '/mbd-ai-lab/',
+  base: '/fsae-mbd/',
   integrations: [
     mdx(),
     sitemap({
