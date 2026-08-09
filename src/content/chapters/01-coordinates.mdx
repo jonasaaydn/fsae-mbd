@@ -3,13 +3,17 @@ part: 1
 chapter: 1
 title: "座標系と符号規約"
 summary: "ISO と SAE で符号が違う。実測データを読む前にこれを確認しないと、結論が反転する。"
-status: "draft"
+status: "published"
 prereq: []
 software: ["MATLAB R2024b"]
 toolbox: []
 math: ["線形代数"]
 ---
 
+import CoordinateSystem from '../../components/figures/CoordinateSystem.astro';
+
 ## この章でできるようになること
 
 車両座標系を定義し、ISO と SAE の符号規約の違いを説明できる。
+
+<CoordinateSystem number="1-1" convention="ISO" />

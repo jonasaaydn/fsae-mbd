@@ -1,0 +1,43 @@
+---
+import FigureFrame from './FigureFrame.astro';
+
+interface Props {
+  convention?: 'ISO' | 'SAE';
+  number: string;
+}
+const { convention = 'ISO', number } = Astro.props;
+
+// ISO: z 下向き / SAE: z 上向き。y の向きも反転する
+const isISO = convention === 'ISO';
+const yLabel = isISO ? '右' : '左';
+const zText  = isISO ? 'z は下向き（紙面裏）' : 'z は上向き（紙面手前）';
+const caption = isISO
+  ? '車両座標系（ISO 8855）。x 前方・y 右・z 下向き。'
+  : '車両座標系（SAE J670）。x 前方・y 左・z 上向き。ISO と y・z の向きが逆になる。';
+---
+
+<FigureFrame number={number} caption={caption} viewBox="0 0 560 300">
+  <!-- 車体（上面図の簡略形） -->
+  <rect class="body" x="180" y="110" width="200" height="80" rx="14" />
+  <line class="guide" x1="280" y1="70" x2="280" y2="230" />
+
+  <!-- x 軸（前方） -->
+  <line class="geo" x1="280" y1="150" x2="440" y2="150" marker-end="url(#arrow-geo)" />
+  <text class="sym" x="448" y="155">x</text>
+  <text class="lbl-sub" x="448" y="171">前方</text>
+
+  <!-- y 軸 -->
+  <line class="geo" x1="280" y1="150" x2="280" y2={isISO ? 250 : 50} marker-end="url(#arrow-geo)" />
+  <text class="sym" x="292" y={isISO ? 248 : 58}>y</text>
+  <text class="lbl-sub" x="292" y={isISO ? 264 : 74}>{yLabel}</text>
+
+  <!-- 原点 -->
+  <circle cx="280" cy="150" r="4" fill="#0f172a" />
+  <text class="lbl-sub" x="292" y="140">重心（原点）</text>
+
+  <!-- z の向きの注記 -->
+  <text class="lbl-sub" x="80" y="150">{zText}</text>
+
+  <!-- 規約名 -->
+  <text x="80" y="60" font-weight="700">{convention}</text>
+</FigureFrame>
