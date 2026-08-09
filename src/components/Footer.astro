@@ -1,42 +1,25 @@
 ---
-import { CATEGORIES } from '../utils/categories';
-import { categoryToSlug } from '../utils/categories';
-
 const base = import.meta.env.BASE_URL;
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <div class="footer-logo">⚙ MBD×AI Lab</div>
+      <div class="footer-logo">⚙ 学生フォーミュラ MBD</div>
       <p class="footer-desc">
-        レース車両開発エンジニアのための AI ツール情報ブログ。<br />
-        MBD・Simulink・CAE・走行データ解析に役立つ最新 AI 情報を発信します。
+        学生フォーミュラ車両のモデルベース開発を、<br />
+        車両運動から DIL シミュレータまで体系的に扱う教科書です。
       </p>
-    </div>
-
-    <div class="footer-nav">
-      <h3 class="footer-nav-title">カテゴリ</h3>
-      <ul>
-        {CATEGORIES.map((cat) => (
-          <li>
-            <a href={`${base}categories/${categoryToSlug(cat)}`}>{cat}</a>
-          </li>
-        ))}
-      </ul>
     </div>
 
     <div class="footer-nav">
       <h3 class="footer-nav-title">サイト</h3>
       <ul>
         <li><a href={base}>ホーム</a></li>
+        <li><a href={`${base}curriculum`}>目次</a></li>
+        <li><a href={`${base}notation`}>記号表</a></li>
+        <li><a href={`${base}software`}>ソフトウェア</a></li>
         <li><a href={`${base}about`}>このサイトについて</a></li>
-        <li><a href={`${base}blog`}>記事一覧</a></li>
-        <li><a href={`${base}guide/student-formula`}>学生フォーミュラ ガイド</a></li>
-        <li><a href={`${base}tools`}>AIツール一覧</a></li>
-        <li><a href={`${base}glossary`}>用語集</a></li>
-        <li><a href={`${base}search`}>記事検索</a></li>
-        <li><a href={`${base}rss.xml`}>RSS フィード</a></li>
         <li><a href={`${base}privacy`}>プライバシーポリシー</a></li>
       </ul>
     </div>
@@ -44,7 +27,7 @@ const base = import.meta.env.BASE_URL;
 
   <div class="footer-bottom">
     <div class="container">
-      <p>&copy; {new Date().getFullYear()} MBD×AI Lab. Built with Astro.</p>
+      <p>&copy; {new Date().getFullYear()} 学生フォーミュラ MBD. Built with Astro.</p>
     </div>
   </div>
 </footer>
@@ -58,7 +41,7 @@ const base = import.meta.env.BASE_URL;
 
   .footer-inner {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 3rem;
     padding: 3rem 1.25rem 2.5rem;
   }

@@ -4,13 +4,12 @@ import { SITE } from '../site.config';
 
 const base = import.meta.env.BASE_URL;
 const usesAnalytics = Boolean(SITE.gaMeasurementId);
-const usesAffiliate = Boolean(SITE.amazonStorefrontUrl);
-const updated = '2026-06-23';
+const updated = '2026-08-09';
 ---
 
 <BaseLayout
   title="プライバシーポリシー・広告表記"
-  description="MBD×AI Lab のプライバシーポリシー（アクセス解析・Cookie の利用）と広告（アフィリエイト）に関する表記です。"
+  description="学生フォーミュラのモデルベース開発 のプライバシーポリシー（アクセス解析・Cookie の利用）と広告（アフィリエイト）に関する表記です。"
   canonicalPath="/privacy/"
 >
   <article class="legal container">
@@ -23,7 +22,7 @@ const updated = '2026-06-23';
     <section class="legal-section">
       <h2>運営</h2>
       <p>
-        本サイト「MBD×AI Lab」（{SITE.origin}{SITE.base}/）は、レース車両開発の現場で働くMBDエンジニアが個人で運営する技術情報ブログです。
+        本サイト「{SITE.title}」（{SITE.origin}{SITE.base}/）は、レース車両のMBD（モデルベース開発）に携わる現役エンジニアが個人で運営する教科書サイトです。
       </p>
     </section>
 
@@ -46,21 +45,7 @@ const updated = '2026-06-23';
 
     <section class="legal-section">
       <h2>広告（アフィリエイトプログラム）について</h2>
-      {usesAffiliate ? (
-        <>
-          <p>
-            本サイトは、第三者が提供するアフィリエイトプログラム（Amazon アソシエイト・プログラム等）を利用しており、
-            これらを通じて商品・サービスを紹介し、紹介料を得る場合があります。
-          </p>
-          <p>
-            本サイトは Amazon.co.jp を宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定された
-            アフィリエイトプログラムである、Amazon アソシエイト・プログラムの参加者です。
-            紹介する商品は、運営者が有用と判断したものですが、購入の最終判断はご自身の責任で行ってください。
-          </p>
-        </>
-      ) : (
-        <p>本サイトは現在、アフィリエイトプログラムによる広告を掲載していません（今後掲載する場合は、その旨を本ページに明記します）。</p>
-      )}
+      <p>本サイトは現在、アフィリエイトプログラムによる広告を掲載していません（今後掲載する場合は、その旨を本ページに明記します）。</p>
     </section>
 
     <section class="legal-section">

@@ -1,11 +1,10 @@
 ---
 const base = import.meta.env.BASE_URL;
 const navLinks = [
-  { href: `${base}blog`, label: '記事一覧' },
-  { href: `${base}guide/student-formula`, label: '学生ガイド' },
-  { href: `${base}tools`, label: 'AIツール' },
-  { href: `${base}glossary`, label: '用語集' },
-  { href: `${base}categories/race-engineering-use-cases`, label: 'Race Engineering' },
+  { href: `${base}curriculum`, label: '目次' },
+  { href: `${base}notation`, label: '記号表' },
+  { href: `${base}software`, label: 'ソフトウェア' },
+  { href: `${base}about`, label: 'このサイトについて' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -16,8 +15,8 @@ const currentPath = Astro.url.pathname;
     <a href={base} class="site-logo">
       <span class="logo-icon" aria-hidden="true">⚙</span>
       <span class="logo-text">
-        <span class="logo-main">MBD×AI Lab</span>
-        <span class="logo-sub">Race Engineering × AI Tools</span>
+        <span class="logo-main">学生フォーミュラ MBD</span>
+        <span class="logo-sub">Model-Based Development</span>
       </span>
     </a>
 
@@ -40,7 +39,7 @@ const currentPath = Astro.url.pathname;
       </ul>
     </nav>
 
-    <a href={`${base}search`} class="search-btn" aria-label="記事を検索">
+    <a href={`${base}search`} class="search-btn" aria-label="検索">
       <svg viewBox="0 0 20 20" width="17" height="17" fill="none" aria-hidden="true">
         <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.7"/>
         <line x1="12.5" y1="12.5" x2="17" y2="17" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
