@@ -8,6 +8,8 @@ prereq: []
 software: ["MATLAB R2024b"]
 toolbox: []
 math: ["線形代数"]
+verified_on: "2026-08-10"
+verified_env: "MATLAB R2025b (25.2.0.3042426) Update 1 / Windows"
 ---
 
 import SignConvention from '../../components/figures/SignConvention.astro';
@@ -91,9 +93,21 @@ fprintf('T*T = I か: %d\n', isequal(T*T, eye(3)));
 
 ## 実行結果
 
-**出力の形式（未実測）**
+2026-08-10、MATLAB R2025b (25.2.0.3042426) Update 1 / Windows 上で上記のコードを実際に実行しました。コマンドウィンドウに表示された出力をそのまま以下に示します。
 
-このコードは、この章を書いている時点ではまだ実際のMATLAB環境で実行していません。運営者が手元のMATLABで実行し、コマンドウィンドウに表示された出力をそのままこのセクションに貼り付け、実行日と`version`コマンドで得られたMATLABのバージョンを追記するまで、ここに具体的な数値は掲載しません。
+```text
+--- 同じ左旋回を2つの規約で表す ---
+ISO: a_y = +8.50 m/s^2,  r = +0.620 rad/s
+SAE: a_y = -8.50 m/s^2,  r = -0.620 rad/s
+
+変換行列 T:
+      1     0     0
+      0    -1     0
+      0     0    -1
+T*T = I か: 1
+```
+
+`T*T = I か: 1`が示すとおり、`T`は実際に自分自身の逆行列であり、理論セクションで導いた`T² = I`という主張がそのまま数値的に確認できました。ISO表記の`a_y = +8.50 m/s², r = +0.620 rad/s`が、SAE表記では両方とも符号が反転して`a_y = -8.50 m/s², r = -0.620 rad/s`になっている点も、理論どおりです。
 
 ## 限界と適用範囲
 
