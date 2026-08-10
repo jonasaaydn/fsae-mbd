@@ -30,6 +30,14 @@
   --ink-on-dark-muted: #A8A29A;
   --rule-on-dark: color-mix(in srgb, var(--paper) 20%, var(--ink));
 
+  /* ---- 計器面（ヒーローのタイミングパネル専用。design-direction-v3.md）----
+     本文の読む面（--paper系）には使わない。暗いのはこの3値だけ。
+     コントラスト実測（WCAG相対輝度式で算出、node実行済み）:
+     panel上 panel-ink: 16.17:1 / panel上 panel-dim: 4.74:1（本文サイズ4.5:1をわずかに満たす） */
+  --panel: #17140F;
+  --panel-ink: #F5F0E6;
+  --panel-dim: #8A8073;
+
   /* ---- 互換名（src/components/figures/ の既存参照を壊さないためのエイリアス。
      図の3色 velocity=#2563eb / force=#dc2626 / geometry=#0f172a は変更しない） ---- */
   --color-bg: var(--paper);

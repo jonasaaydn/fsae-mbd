@@ -22,31 +22,51 @@ const firstPublished = groups.flatMap((g) => g.chapters).find((c) => c.data.stat
     </div>
   </section>
 
-  <section class="vmodel container" aria-labelledby="vmodel-heading">
-    <h2 id="vmodel-heading" class="vmodel-heading">V字モデルで見る、6部の進捗</h2>
-    <p class="vmodel-sub">
-      V字モデルは、要件から実装・検証までをたどるMBDの基本工程図です。本サイトの6部はこの工程の順に並び、
-      各部の公開章数がそのまま読み進められる範囲になります。
+  <section class="sectorboard container" aria-labelledby="sectorboard-heading">
+    <h2 id="sectorboard-heading" class="sb-heading">セクターボード — 1周48章、6部の進捗</h2>
+    <p class="sb-sub">
+      本書は48章を6つの部に分けた1周です。各部はV字モデルの工程（モデリング→検証→解析→設計→実装・検証）を
+      たどるセクターとして並び、公開章数がそのまま読み進められる範囲になります。
     </p>
 
-    <div class="vgrid" role="list">
-      {groups.map(({ part, chapters }) => {
-        const prog = progress.byPart[part.id];
-        const pct = prog.total > 0 ? Math.round((prog.published / prog.total) * 100) : 0;
-        const status = prog.published === 0 ? 'is-empty' : prog.published >= prog.total ? 'is-complete' : 'is-active';
-        return (
-          <a
-            href={`${base}curriculum/#part-${part.id}`}
-            class:list={['vnode', status]}
-            role="listitem"
-          >
-            <span class="vnode-roman">{part.roman}</span>
-            <span class="vnode-title">{part.title}</span>
-            <span class="vnode-frac">{prog.published} / {prog.total}<span class="vnode-unit">章</span></span>
-            <span class="vnode-bar" aria-hidden="true"><span class="vnode-fill" style={`width:${pct}%`}></span></span>
-          </a>
-        );
-      })}
+    <div class="panel">
+      <div class="panel-top">
+        <span class="pt-kicker">SECTOR BOARD</span>
+        <span class="pt-total">
+          <span class="pt-total-num">{String(progress.published).padStart(2, '0')}<span class="pt-total-slash">/</span>{String(progress.total).padStart(2, '0')}</span>
+          <span class="pt-total-label">章公開</span>
+        </span>
+      </div>
+
+      <div class="panel-head" aria-hidden="true">
+        <span class="ph-sector"><span class="ph-full">SECTOR</span><span class="ph-abbr">S</span></span>
+        <span class="ph-part">PART</span>
+        <span class="ph-ch">CH</span>
+        <span class="ph-status">STATUS</span>
+      </div>
+      <div class="beam"><span class="beam-tick"></span></div>
+
+      <div class="panel-rows" role="list">
+        {groups.map(({ part }) => {
+          const prog = progress.byPart[part.id];
+          const pct = prog.total > 0 ? Math.round((prog.published / prog.total) * 100) : 0;
+          const status = prog.published === 0 ? 'is-empty' : prog.published >= prog.total ? 'is-complete' : 'is-active';
+          const chLabel = `${String(prog.published).padStart(2, '0')}/${String(prog.total).padStart(2, '0')}`;
+          return (
+            <a
+              href={`${base}curriculum/#part-${part.id}`}
+              class:list={['row', status]}
+              role="listitem"
+              aria-label={`${part.title}: ${prog.published} / ${prog.total} 章公開`}
+            >
+              <span class="row-sector">S{part.id}</span>
+              <span class="row-part">{part.title}</span>
+              <span class="row-ch">{chLabel}</span>
+              <span class="row-bar" aria-hidden="true"><span class="row-bar-fill" style={`width:${pct}%`}></span></span>
+            </a>
+          );
+        })}
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -59,84 +79,172 @@ const firstPublished = groups.flatMap((g) => g.chapters).find((c) => c.data.stat
   .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
   /* ============================================================
-     V字モデル計器（トップページの主役）
+     セクターボード（トップページの主役。design-direction-v3.md）
+     暗い計器面はこの要素だけに使う。章ページ・目次は明るい紙面のまま。
      ============================================================ */
-  .vmodel { padding: 1.5rem 1.25rem 5rem; }
-  .vmodel-heading { font-size: clamp(1.3rem, 3vw, 1.6rem); margin: 0 0 0.75rem; }
-  .vmodel-sub {
+  .sectorboard { padding: 1.5rem 1.25rem 5rem; }
+  .sb-heading { font-size: clamp(1.3rem, 3vw, 1.6rem); margin: 0 0 0.75rem; }
+  .sb-sub {
     max-width: 42em; color: var(--ink-soft); line-height: 1.9;
-    margin: 0 0 2.5rem; font-size: 0.94rem;
+    margin: 0 0 2rem; font-size: 0.94rem;
   }
 
-  .vgrid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(3, auto);
-    grid-template-areas:
-      "n1 .  .  .  . n6"
-      ".  n2 .  . n5 ."
-      ".  .  n3 n4 . .";
-    column-gap: clamp(0.5rem, 1.6vw, 1.25rem);
-    row-gap: 1.1rem;
+  .panel {
+    background: var(--panel);
+    color: var(--panel-ink);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.5rem 0.75rem;
+    box-shadow: var(--shadow-md);
   }
-  .vnode:nth-of-type(1) { grid-area: n1; }
-  .vnode:nth-of-type(2) { grid-area: n2; }
-  .vnode:nth-of-type(3) { grid-area: n3; }
-  .vnode:nth-of-type(4) { grid-area: n4; }
-  .vnode:nth-of-type(5) { grid-area: n5; }
-  .vnode:nth-of-type(6) { grid-area: n6; }
 
-  .vnode {
+  .panel-top {
     display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding: 0.9rem 0.85rem;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius-lg);
-    background: var(--paper);
-    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
   }
-  .vnode:hover { border-color: var(--clay); transform: translateY(-2px); }
-  .vnode.is-active,
-  .vnode.is-complete {
-    border-color: var(--clay);
-    background: var(--clay-fill);
+  .pt-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--panel-dim);
+  }
+  .pt-total { display: flex; align-items: baseline; gap: 0.5rem; }
+  .pt-total-num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(1.3rem, 4vw, 1.7rem);
+    font-weight: 700;
+    color: var(--clay);
+  }
+  .pt-total-slash { color: var(--panel-dim); padding: 0 0.1em; }
+  .pt-total-label { font-family: var(--font-sans); font-size: 0.72rem; color: var(--panel-dim); }
+
+  .panel-head {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr 4.6rem minmax(5rem, 8rem);
+    column-gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--panel-dim);
+    padding: 0 0.4rem 0.6rem;
+  }
+  .ph-ch { text-align: right; }
+  .ph-abbr { display: none; }
+
+  /* セクター境界の罫線（タイミングビーム）: ヘアライン + clay のティック。装飾ではなく境界の印として、
+     ヘッダー行と本体行の間、ここ一箇所にだけ使う。 */
+  .beam {
+    position: relative;
+    height: 1px;
+    background: color-mix(in srgb, var(--panel-ink) 16%, transparent);
+    margin: 0 0.4rem 0.4rem;
+  }
+  .beam-tick {
+    position: absolute;
+    left: 0;
+    top: -3px;
+    width: 2px;
+    height: 7px;
+    background: var(--clay);
   }
 
-  .vnode-roman {
-    font-family: var(--font-mono); font-weight: 700; font-size: 1.3rem;
-    color: var(--clay-text); line-height: 1;
-  }
-  .vnode-title {
-    font-family: var(--font-serif); font-size: 0.86rem; line-height: 1.5;
-    color: var(--ink);
-    min-height: 2.6em;
-  }
-  .vnode-frac {
-    font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--ink);
-  }
-  .vnode-unit { font-family: var(--font-sans); font-weight: 400; color: var(--ink-soft); margin-left: 0.2em; font-size: 0.85em; }
-  .vnode-bar {
-    display: block; height: 4px; border-radius: 2px;
-    background: var(--rule); overflow: hidden;
-  }
-  .vnode-fill { display: block; height: 100%; background: var(--clay); }
+  .panel-rows { display: flex; flex-direction: column; }
 
-  /* ---- narrow screens: V collapses to a single vertical list, top → bottom in part order ---- */
-  @media (max-width: 720px) {
-    .vgrid {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "n1"
-        "n2"
-        "n3"
-        "n4"
-        "n5"
-        "n6";
-      row-gap: 0.75rem;
+  .row {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr 4.6rem minmax(5rem, 8rem);
+    grid-template-areas: "sector part ch bar";
+    column-gap: 0.75rem;
+    align-items: center;
+    padding: 0.75rem 0.4rem;
+    border-radius: var(--radius-sm);
+    border-top: 1px solid color-mix(in srgb, var(--panel-ink) 8%, transparent);
+    transition: background 0.15s ease;
+  }
+  .row-sector { grid-area: sector; }
+  .row-part { grid-area: part; }
+  .row-ch { grid-area: ch; }
+  .row-bar { grid-area: bar; }
+  .panel-rows .row:first-child { border-top: none; }
+  .row:hover { background: color-mix(in srgb, var(--panel-ink) 6%, transparent); }
+  .row:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: -2px;
+  }
+
+  .row-sector {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--panel-dim);
+  }
+  .row.is-active .row-sector,
+  .row.is-complete .row-sector {
+    color: var(--clay);
+  }
+
+  .row-part {
+    font-family: var(--font-serif);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--panel-ink);
+  }
+
+  .row-ch {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--panel-ink);
+    text-align: right;
+  }
+
+  .row-bar {
+    display: block;
+    height: 5px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--panel-ink) 14%, transparent);
+    overflow: hidden;
+  }
+  .row-bar-fill { display: block; height: 100%; background: var(--clay); }
+
+  /* ---- narrow screens: 列幅を圧縮して1行のまま積む。横スクロールは出さない ---- */
+  @media (max-width: 560px) {
+    .panel { padding: 1.25rem 1rem 0.5rem; }
+
+    /* 進捗バーは消さずに下段へ回す。セクターの状態が読めなくなると
+       タイミング画面として成立しないため、幅が足りない時は行を2段にする。
+       ヘッダーは字送りを詰めて列に収める（詰めないと SECTOR と PART が接触する）。 */
+    .panel-head {
+      grid-template-columns: 2.6rem 1fr 3.6rem;
+      column-gap: 0.6rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
     }
-    .vnode { flex-direction: row; align-items: center; gap: 0.9rem; }
-    .vnode-title { min-height: 0; flex: 1; }
-    .vnode-bar { width: 3.5rem; flex-shrink: 0; }
+    /* 幅が足りない列に長いラベルを押し込むと隣と接触する。
+       行側に S1〜S6 が出ているので、ヘッダーは S だけで意味が通る。 */
+    .ph-full { display: none; }
+    .ph-abbr { display: inline; }
+    .ph-status { display: none; }
+
+    .row {
+      grid-template-columns: 2.6rem 1fr 3.6rem;
+      grid-template-areas:
+        "sector part ch"
+        "bar    bar  bar";
+      column-gap: 0.6rem;
+      row-gap: 0.4rem;
+    }
+    .row-bar {
+      grid-area: bar;
+      width: 100%;
+    }
+    .row-part { font-size: 0.82rem; }
   }
 </style>
